@@ -1,16 +1,18 @@
 <a id="english"></a>
 
-# MindBridge
+# mental-agent-runtime
 
 [English](#english) | [中文版](#chinese)
 
-**MindBridge is an industrial C++ multi-agent runtime for governed mental-health agents.**
+**mental-agent-runtime is an industrial C++ multi-agent runtime for governed mental-health agents.**
+
+This repository packages the current MindBridge runtime implementation under a more direct, interview-facing name: `mental-agent-runtime`.
 
 It is not only a chat demo. The project focuses on the engineering layer around LLM agents: service routing, tool governance, risk evaluation, persisted state, run artifacts, browser-visible QA, and optional eBPF boundary observability.
 
 ## Why This Project Matters
 
-MindBridge is built to answer a practical question:
+mental-agent-runtime is built to answer a practical question:
 
 > How do you turn an LLM-powered mental-health assistant into a runtime that can be routed, audited, evaluated, persisted, and explained?
 
@@ -48,6 +50,19 @@ At a high level:
 - `mindbridge_evaluator` handles risk assessment, high-risk fallback, and session summary/report behavior.
 - `mindbridge_harness` contains the reusable runtime pieces: model clients, tool governance, state, storage, benchmark, observability, and network primitives.
 
+## What The Harness Means
+
+In this repository, **harness** means the engineering layer that sits around the model and turns it into a controlled runtime, rather than a raw prompt-in / text-out wrapper.
+
+The harness is responsible for:
+
+- routing requests across gateway, orchestrator, counselor, and evaluator services
+- enforcing tool boundaries through schema validation, permission checks, hooks, and trace recording
+- managing runtime state, persisted artifacts, and cloud storage integration
+- providing benchmark, browser QA, and observability hooks so behavior can be verified instead of guessed
+
+Concretely, the harness lives mainly under `mindbridge_harness/`, and its reusable core includes `AgentLoop`, `ToolRegistry`, `PermissionChecker`, `HookExecutor`, `TraceRecorder`, `RunStore`, `DistributedStateStore`, and the model / speech / multimodal / observability layers.
+
 ## Feature Highlights
 
 | Area | What It Demonstrates | Evidence |
@@ -66,7 +81,7 @@ At a high level:
 
 ## Runtime Governance
 
-MindBridge treats the model as one component inside a governed runtime, not as the whole system.
+mental-agent-runtime treats the model as one component inside a governed runtime, not as the whole system.
 
 Tool execution follows this boundary:
 
@@ -83,7 +98,7 @@ This is important for mental-health workflows because external actions such as a
 
 ## State, Storage, and Artifacts
 
-MindBridge uses three different persistence layers for different jobs:
+mental-agent-runtime uses three different persistence layers for different jobs:
 
 | Layer | Purpose |
 |-------|---------|
@@ -107,7 +122,7 @@ These artifacts make the project easier to inspect in an interview: the runtime 
 
 ## eBPF Boundary Observability
 
-MindBridge includes an optional observability path inspired by AgentSight. It correlates semantic agent events with low-level runtime actions.
+mental-agent-runtime includes an optional observability path inspired by AgentSight. It correlates semantic agent events with low-level runtime actions.
 
 Implemented pieces include:
 
@@ -165,7 +180,7 @@ Both remote startup scripts set `MINDBRIDGE_REQUIRE_REMOTE_MODEL=1` so the demo 
 
 ## Benchmark Results
 
-MindBridge includes a psychology-oriented benchmark path under `benchmarks/psycho_bench/`.
+mental-agent-runtime includes a psychology-oriented benchmark path under `benchmarks/psycho_bench/`.
 
 The evaluation setup uses:
 
@@ -231,7 +246,7 @@ API keys should be supplied through environment variables or hidden script promp
 
 A concise way to explain the project:
 
-> MindBridge is an industrial-grade C++ agent harness for a mental-health assistant. My focus was not only prompt quality, but the runtime around the model: multi-service routing, risk evaluation, governed tool execution, persisted state, cloud storage, benchmark verification, browser QA, and optional eBPF observability. The result is a system that can be demonstrated, inspected, and debugged like an engineered agent platform rather than a single LLM wrapper.
+> mental-agent-runtime is an industrial-grade C++ agent harness for a mental-health assistant. My focus was not only prompt quality, but the runtime around the model: multi-service routing, risk evaluation, governed tool execution, persisted state, cloud storage, benchmark verification, browser QA, and optional eBPF observability. The result is a system that can be demonstrated, inspected, and debugged like an engineered agent platform rather than a single LLM wrapper.
 
 What it is honest to claim:
 
@@ -262,17 +277,19 @@ What remains future work:
 
 <a id="chinese"></a>
 
-# MindBridge 中文版
+# mental-agent-runtime 中文版
 
 [English](#english) | [中文版](#chinese)
 
-**MindBridge 是一个面向心理健康智能体的工业级 C++ 多智能体运行时。**
+**mental-agent-runtime 是一个面向心理健康智能体的工业级 C++ 多智能体运行时。**
+
+这个仓库对外展示名使用 `mental-agent-runtime`，内部实现主体仍然是当前的 MindBridge runtime。
 
 它不只是一个聊天 Demo。这个项目的重点是把 LLM 包进一套可路由、可审计、可评测、可持久化、可观测的工程运行时里，包括服务编排、工具治理、风险评估、状态存储、运行产物、浏览器可见 QA，以及可选的 eBPF 边界观测。
 
 ## 这个项目的价值
 
-MindBridge 想解决的核心问题是：
+mental-agent-runtime 想解决的核心问题是：
 
 > 怎样把一个基于大模型的心理健康助手，做成一个可以解释、验证、追踪和演示的工程化 Agent Runtime？
 
@@ -310,6 +327,19 @@ Frontend / Client
 - `mindbridge_evaluator`：高风险评估、会话结束评估、兜底决策。
 - `mindbridge_harness`：承载模型抽象、工具治理、状态、存储、benchmark、observability、网络层等通用运行时能力。
 
+## Harness 是什么
+
+这里说的 **harness**，不是一个模糊的包装词，而是围绕模型建立起来的工程运行时层。它的作用是把“模型调用”变成“可路由、可治理、可观测、可验证”的系统。
+
+在这个项目里，harness 主要负责：
+
+- 把请求编排到 gateway、orchestrator、counselor、evaluator 这些服务
+- 把工具调用收敛到 schema 校验、权限控制、hook 和 trace 审计链里
+- 管理运行时状态、run artifacts、云存储链路
+- 给 benchmark、browser QA、observability 提供统一的验证和复盘入口
+
+对应实现主要在 `mindbridge_harness/` 下，核心组件包括 `AgentLoop`、`ToolRegistry`、`PermissionChecker`、`HookExecutor`、`TraceRecorder`、`RunStore`、`DistributedStateStore`，以及模型、语音、多模态、可观测性等运行时模块。
+
 ## 特色能力
 
 | 模块 | 说明 | 证据 |
@@ -328,7 +358,7 @@ Frontend / Client
 
 ## 工具治理
 
-MindBridge 的重点不是“直接调用模型”，而是把模型放在一个受治理的 runtime 内部。
+mental-agent-runtime 的重点不是“直接调用模型”，而是把模型放在一个受治理的 runtime 内部。
 
 工具执行边界如下：
 
@@ -369,7 +399,7 @@ Run 产物目录约定：
 
 ## eBPF 边界观测
 
-MindBridge 支持可选的 AgentSight 风格运行时观测，核心能力包括：
+mental-agent-runtime 支持可选的 AgentSight 风格运行时观测，核心能力包括：
 
 - `process_new` 进程生命周期观测
 - 文件 / 网络 / 资源扩展探针
@@ -425,7 +455,7 @@ bash scripts/start_demo_dashscope.sh
 
 ## Benchmark 效果
 
-MindBridge 在 `benchmarks/psycho_bench/` 下带了一套面向心理咨询场景的 benchmark。
+mental-agent-runtime 在 `benchmarks/psycho_bench/` 下带了一套面向心理咨询场景的 benchmark。
 
 评测口径是：
 
@@ -466,7 +496,7 @@ MindBridge 在 `benchmarks/psycho_bench/` 下带了一套面向心理咨询场�
 
 一句适合面试时直接说的话：
 
-> MindBridge 是一个面向心理健康智能体的工业级 C++ agent harness。我做的不只是 prompt 或聊天逻辑，而是围绕模型构建了多服务编排、风险评估、工具治理、状态持久化、云存储、benchmark、浏览器 QA 和可选 eBPF 可观测性，让它更像一个可验证、可解释、可调试的 Agent Runtime。
+> mental-agent-runtime 是一个面向心理健康智能体的工业级 C++ agent harness。我做的不只是 prompt 或聊天逻辑，而是围绕模型构建了多服务编排、风险评估、工具治理、状态持久化、云存储、benchmark、浏览器 QA 和可选 eBPF 可观测性，让它更像一个可验证、可解释、可调试的 Agent Runtime。
 
 可以诚实宣称的内容：
 
