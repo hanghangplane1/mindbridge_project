@@ -1,0 +1,13 @@
+.git
+build
+build-*
+.mindbridge
+.deps
+node_modules
+k8s/**/secret*.yaml
+**/*.log
+**/*.sqlite
+**/*.db
+**/CMakeFiles
+**/CMakeCache.txt
+**/cmake_install.cmake

@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MindBridge Demo Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ─── Header ─── -->
+  <header class="header">
+    <div class="header-left">
+      <h1>Mind<span>Bridge</span> Demo</h1>
+      <span class="header-subtitle">Harness Runtime Cockpit</span>
+      <nav class="view-tabs" aria-label="Primary views">
+        <button class="view-tab active" id="tab-cockpit" onclick="switchView('cockpit')">Agent Cockpit</button>
+        <button class="view-tab" id="tab-platform" onclick="switchView('platform')">Platform</button>
+        <button class="view-tab" id="tab-storage" onclick="switchView('storage')">Cloud Storage</button>
+        <button class="view-tab" id="tab-observability" onclick="switchView('observability')">Observability</button>
+      </nav>
+    </div>
+    <div class="header-right">
+      <span class="header-subtitle" id="auth-user-label">Not signed in</span>
+      <button class="auth-small-btn" id="logout-btn" onclick="logout()" disabled>Logout</button>
+      <span class="header-subtitle" id="gateway-url-label">http://127.0.0.1:8090</span>
+    </div>
+  </header>
+
+  <div class="login-overlay" id="login-overlay">
+    <div class="login-panel">
+      <div class="login-title">MindBridge Login</div>
+      <div class="login-subtitle">Use your AK/SK to start an isolated conversation workspace.</div>
+      <input class="login-input" id="access-key-input" placeholder="Access Key ID" autocomplete="off">
+      <input class="login-input" id="secret-key-input" placeholder="Secret Key" type="password" autocomplete="off">
+      <button class="login-btn" onclick="login()">Login</button>
+      <div class="login-error" id="login-error"></div>
+    </div>
+  </div>
+
+  <!-- ─── Service Status Bar ─── -->
+  <div class="status-bar">
+    <div class="status-chip pending" id="st-gateway">
+      <span class="status-dot"></span>
+      <span>Gateway :8090</span>
+    </div>
+    <div class="status-chip pending" id="st-orchestrator">
+      <span class="status-dot"></span>
+      <span>Orchestrator :5009</span>
+    </div>
+    <div class="status-chip pending" id="st-counselor">
+      <span class="status-dot"></span>
+      <span>Counselor :5010</span>
+    </div>
+    <div class="status-chip pending" id="st-evaluator">
+      <span class="status-dot"></span>
+      <span>Evaluator :5011</span>
+    </div>
+  </div>
+
+  <!-- ─── Main Grid ─── -->
+  <section class="platform-dashboard hidden" id="platform-dashboard">
+    <div class="platform-header">
+      <div>
+        <div class="section-title">Agent Platform</div>
+        <h2>Workspace Sessions</h2>
+      </div>
+      <div class="platform-actions">
+        <input class="storage-search" id="platform-url-input" placeholder="Platform API URL">
+        <button class="media-btn" onclick="savePlatformUrl()">Use URL</button>
+        <button class="media-btn" onclick="loadPlatformDashboard()">Refresh</button>
+      </div>
+    </div>
+
+    <div class="platform-stats">
+      <div class="storage-stat">
+        <div class="storage-stat-label">Workspaces</div>
+        <div class="storage-stat-value" id="platform-workspace-count">0</div>
+      </div>
+      <div class="storage-stat">
+        <div class="storage-stat-label">Sessions</div>
+        <div class="storage-stat-value" id="platform-session-count">0</div>
+      </div>
+      <div class="storage-stat">
+        <div class="storage-stat-label">Events</div>
+        <div class="storage-stat-value" id="platform-event-count">0</div>
+      </div>
+      <div class="storage-stat">
+        <div class="storage-stat-label">Artifacts</div>
+        <div class="storage-stat-value" id="platform-artifact-count">0</div>
+      </div>
+    </div>
+
+    <div class="platform-grid">
+      <section class="platform-panel">
+        <div class="platform-panel-head">
+          <div>
+            <div class="section-title">Workspaces</div>
+            <div class="platform-muted">Owner-scoped platform inventory</div>
+          </div>
+          <button class="media-btn" onclick="createPlatformWorkspace()">Create</button>
+        </div>
+        <div class="platform-form">
+          <input id="platform-workspace-id" class="login-input" placeholder="workspace id">
+          <input id="platform-owner-id" class="login-input" placeholder="owner user id">
+        </div>
+        <div class="platform-list" id="platform-workspace-list">
+          <div class="storage-empty">No workspaces loaded</div>
+        </div>
+      </section>
+
+      <section class="platform-panel">
+        <div class="platform-panel-head">
+          <div>
+            <div class="section-title">Sessions</div>
+            <div class="platform-muted">Remote Agent Session control</div>
+          </div>
+          <button class="media-btn" onclick="createPlatformSession()">Start</button>
+        </div>
+        <div class="platform-form">
+          <input id="platform-session-id" class="login-input" placeholder="session id">
+          <input id="platform-conversation-id" class="login-input" placeholder="conversation id">
+        </div>
+        <div class="platform-list" id="platform-session-list">
+          <div class="storage-empty">No sessions loaded</div>
+        </div>
+      </section>
+    </div>
+
+    <div class="platform-grid platform-grid-wide">
+      <section class="platform-panel">
+        <div class="platform-panel-head">
+          <div>
+            <div class="section-title">Universal Events</div>
+            <div class="platform-muted" id="platform-selected-session">No session selected</div>
+          </div>
+          <button class="media-btn" onclick="refreshSelectedPlatformSession()">Refresh</button>
+        </div>
+        <div class="platform-list" id="platform-event-list">
+          <div class="storage-empty">Select a session to load events</div>
+        </div>
+      </section>
+
+      <section class="platform-panel">
+        <div class="platform-panel-head">
+          <div>
+            <div class="section-title">Artifacts</div>
+            <div class="platform-muted">Controlled run files only</div>
+          </div>
+        </div>
+        <div class="platform-list" id="platform-artifact-list">
+          <div class="storage-empty">Select a session to load artifacts</div>
+        </div>
+      </section>
+    </div>
+
+    <div class="media-status" id="platform-status">Platform idle</div>
+  </section>
+
+  <section class="storage-dashboard hidden" id="storage-dashboard">
+    <div class="storage-dashboard-header">
+      <div>
+        <div class="section-title">Cloud Storage</div>
+        <h2>Conversation Assets</h2>
+      </div>
+      <div class="storage-dashboard-actions">
+        <input class="storage-search" id="storage-search-input" placeholder="Search files or types..." oninput="renderStorageDashboard()">
+        <button class="media-btn" onclick="loadStorageFiles()">Refresh</button>
+      </div>
+    </div>
+
+    <div class="storage-stats">
+      <div class="storage-stat">
+        <div class="storage-stat-label">Total Files</div>
+        <div class="storage-stat-value" id="storage-total-files">0</div>
+      </div>
+      <div class="storage-stat">
+        <div class="storage-stat-label">Storage Used</div>
+        <div class="storage-stat-value" id="storage-total-size">0 B</div>
+      </div>
+      <div class="storage-stat">
+        <div class="storage-stat-label">Images</div>
+        <div class="storage-stat-value" id="storage-image-count">0</div>
+      </div>
+      <div class="storage-stat">
+        <div class="storage-stat-label">Other Files</div>
+        <div class="storage-stat-value" id="storage-other-count">0</div>
+      </div>
+    </div>
+
+    <div class="storage-dashboard-grid">
+      <section class="storage-upload-zone" id="storage-drop-zone">
+        <input id="storage-dashboard-file-input" type="file" class="hidden" onchange="uploadDashboardAttachment(event)">
+        <div class="storage-upload-title">Upload files</div>
+        <div class="storage-upload-copy">Drag files here or choose a file for this conversation workspace.</div>
+        <div class="storage-upload-controls">
+          <button class="send-btn" onclick="document.getElementById('storage-dashboard-file-input').click()">Choose File</button>
+          <span class="storage-meta" id="storage-dashboard-status">Storage idle</span>
+        </div>
+        <div class="storage-progress" aria-hidden="true">
+          <div class="storage-progress-bar" id="storage-progress-bar"></div>
+        </div>
+      </section>
+
+      <section class="storage-recent-panel">
+        <div class="section-title">Recent Uploads</div>
+        <div class="storage-recent-list" id="storage-recent-list">
+          <div class="storage-empty">No uploads yet</div>
+        </div>
+      </section>
+    </div>
+
+    <section class="storage-table-panel">
+      <div class="section-title">Files</div>
+      <div class="storage-file-table" id="storage-file-table">
+        <div class="storage-empty">No files loaded</div>
+      </div>
+    </section>
+  </section>
+
+  <section class="observability-dashboard hidden" id="observability-dashboard">
+    <div class="observability-header">
+      <div>
+        <div class="section-title">Boundary Observability</div>
+        <h2>eBPF Runtime Trace</h2>
+      </div>
+      <div class="observability-actions">
+        <input class="storage-search" id="observability-filter-input" placeholder="Filter events, pid, command..." oninput="renderObservabilityDashboard()">
+        <button class="media-btn" onclick="loadObservability()">Refresh</button>
+      </div>
+    </div>
+
+    <div class="observability-stats">
+      <div class="storage-stat">
+        <div class="storage-stat-label">Intent Events</div>
+        <div class="storage-stat-value" id="obs-intent-events">0</div>
+      </div>
+      <div class="storage-stat">
+        <div class="storage-stat-label">Action Events</div>
+        <div class="storage-stat-value" id="obs-action-events">0</div>
+      </div>
+      <div class="storage-stat">
+        <div class="storage-stat-label">Resource Events</div>
+        <div class="storage-stat-value" id="obs-resource-events">0</div>
+      </div>
+      <div class="storage-stat">
+        <div class="storage-stat-label">Warnings</div>
+        <div class="storage-stat-value" id="obs-warnings">0</div>
+      </div>
+      <div class="storage-stat">
+        <div class="storage-stat-label">TLS Events</div>
+        <div class="storage-stat-value" id="obs-tls-events">0</div>
+      </div>
+    </div>
+
+    <section class="observability-performance">
+      <div class="observability-performance-header">
+        <div>
+          <div class="section-title">CPU &amp; Memory Monitoring Dashboard</div>
+          <div class="obs-muted">Run-level eBPF resource samples</div>
+        </div>
+        <div class="obs-muted" id="obs-resource-sample-count">0 samples</div>
+      </div>
+      <div class="observability-perf-stats">
+        <div class="storage-stat">
+          <div class="storage-stat-label">AVG CPU</div>
+          <div class="storage-stat-value" id="obs-avg-cpu">0%</div>
+        </div>
+        <div class="storage-stat">
+          <div class="storage-stat-label">PEAK CPU</div>
+          <div class="storage-stat-value" id="obs-peak-cpu">0%</div>
+        </div>
+        <div class="storage-stat">
+          <div class="storage-stat-label">AVG MEMORY</div>
+          <div class="storage-stat-value" id="obs-avg-memory">0 MB</div>
+        </div>
+        <div class="storage-stat">
+          <div class="storage-stat-label">PEAK MEMORY</div>
+          <div class="storage-stat-value" id="obs-peak-memory">0 MB</div>
+        </div>
+      </div>
+      <div class="obs-memory-chart" id="obs-memory-chart">
+        <div class="storage-empty">Enable MINDBRIDGE_EBPF_TRACE_RESOURCES=1 to collect CPU and memory samples.</div>
+      </div>
+    </section>
+
+    <div class="boundary-map">
+      <div class="boundary-card" data-boundary="A2L">
+        <div class="boundary-title">A2L</div>
+        <div class="boundary-copy">Agent -> LLM</div>
+        <div class="boundary-probe">ModelClient metadata / optional TLS uprobe</div>
+      </div>
+      <div class="boundary-card" data-boundary="A2T_COMMAND">
+        <div class="boundary-title">A2T Command</div>
+        <div class="boundary-copy">Agent -> Sandbox</div>
+        <div class="boundary-probe">exec / fork / exit / stdout</div>
+      </div>
+      <div class="boundary-card" data-boundary="A2T_NETWORK">
+        <div class="boundary-title">A2T Network</div>
+        <div class="boundary-copy">Agent -> Tool API</div>
+        <div class="boundary-probe">connect / accept / protocol summary</div>
+      </div>
+      <div class="boundary-card" data-boundary="TLS_PLAINTEXT">
+        <div class="boundary-title">TLS Plaintext</div>
+        <div class="boundary-copy">HTTPS before encryption</div>
+        <div class="boundary-probe">OpenSSL read/write uprobe</div>
+      </div>
+      <div class="boundary-card" data-boundary="MCP_STDIO">
+        <div class="boundary-title">MCP Stdio</div>
+        <div class="boundary-copy">Agent -> MCP Server</div>
+        <div class="boundary-probe">pipe read/write JSON-RPC summary</div>
+      </div>
+      <div class="boundary-card" data-boundary="A2A">
+        <div class="boundary-title">A2A</div>
+        <div class="boundary-copy">Service -> Service</div>
+        <div class="boundary-probe">Gateway / Orchestrator / Agent calls</div>
+      </div>
+    </div>
+
+    <div class="observability-grid">
+      <section class="observability-panel">
+        <div class="section-title">Process Tree</div>
+        <div id="obs-process-tree" class="obs-list"><div class="storage-empty">No process events loaded</div></div>
+      </section>
+      <section class="observability-panel">
+        <div class="observability-panel-head">
+          <div>
+            <div class="section-title">Timeline</div>
+            <div class="obs-muted">Ctrl/Cmd + wheel or +/- to zoom, Ctrl/Cmd + 0 to reset</div>
+          </div>
+          <div class="timeline-controls">
+            <select class="obs-select" id="obs-source-filter" onchange="renderObservabilityDashboard()">
+              <option value="">All Sources</option>
+            </select>
+            <select class="obs-select" id="obs-pid-filter" onchange="renderObservabilityDashboard()">
+              <option value="">All PIDs</option>
+            </select>
+            <button class="media-btn timeline-btn" onclick="adjustObservabilityZoom(-0.15)">-</button>
+            <button class="media-btn timeline-btn" onclick="resetObservabilityZoom()">100%</button>
+            <button class="media-btn timeline-btn" onclick="adjustObservabilityZoom(0.15)">+</button>
+          </div>
+        </div>
+        <div id="obs-timeline" class="obs-timeline"><div class="storage-empty">No boundary trace loaded</div></div>
+      </section>
+      <section class="observability-panel">
+        <div class="section-title">Resource Metrics</div>
+        <div id="obs-resource-metrics" class="obs-list"><div class="storage-empty">No resource samples loaded</div></div>
+      </section>
+      <section class="observability-panel">
+        <div class="section-title">TLS Plaintext</div>
+        <div id="obs-tls-events-list" class="obs-list"><div class="storage-empty">No TLS plaintext events loaded</div></div>
+      </section>
+      <section class="observability-panel">
+        <div class="section-title">Event Log</div>
+        <div id="obs-event-log" class="json-block obs-event-log">[]</div>
+      </section>
+    </div>
+  </section>
+
+  <div class="main" id="cockpit-view">
+
+    <!-- ─── Left: Chat Panel ─── -->
+    <div class="chat-panel">
+      <div class="chat-header">
+        <span>Agent Chat</span>
+        <button class="chat-header-btn" onclick="loadConversationHistory()">Refresh History</button>
+      </div>
+
+      <section class="history-panel">
+        <div class="history-title">Stored History</div>
+        <div class="history-list" id="conversation-list">
+          <div class="history-empty">No stored turns loaded</div>
+        </div>
+        <div class="history-turns" id="conversation-turns"></div>
+      </section>
+
+      <div class="chat-messages" id="chat-messages">
+        <div class="chat-msg system">Send a message or use a demo button below.</div>
+      </div>
+
+      <div class="media-panel">
+        <video id="camera-preview" class="camera-preview" autoplay playsinline muted></video>
+        <canvas id="snapshot-canvas" class="hidden"></canvas>
+        <div class="media-controls">
+          <button class="media-btn" id="call-btn" onclick="startVideoCall()">Start Video Call</button>
+          <button class="media-btn" id="send-voice-btn" onclick="sendVoiceNow()">Send Voice</button>
+          <button class="media-btn" id="end-call-btn" onclick="endVideoCall()">End Call</button>
+        </div>
+        <div class="media-file-controls">
+          <label class="media-file-label">
+            Image
+            <input id="image-file-input" type="file" accept="image/*" onchange="loadImageFile(event)">
+          </label>
+          <label class="media-file-label">
+            Audio
+            <input id="audio-file-input" type="file" accept="audio/*" onchange="loadAudioFile(event)">
+          </label>
+        </div>
+        <div class="media-status" id="media-status">Video call idle</div>
+      </div>
+
+      <div class="storage-panel">
+        <div class="storage-title">Attachments</div>
+        <div class="storage-row">
+          <input class="storage-input" id="storage-file-input" type="file">
+          <button class="media-btn" id="storage-upload-btn" onclick="uploadAttachment()">Upload</button>
+        </div>
+        <div class="media-status" id="storage-status">Storage idle</div>
+        <div class="storage-list" id="storage-list"></div>
+      </div>
+
+      <div class="demo-buttons">
+        <button class="demo-btn" onclick="sendDemo('normal')">
+          <span class="badge normal">Normal</span>
+          <span>你好，我最近压力有点大，想聊聊。</span>
+        </button>
+        <button class="demo-btn" onclick="sendDemo('risk')">
+          <span class="badge risk">High Risk</span>
+          <span>我不想活了，感觉活着没有意义。</span>
+        </button>
+        <button class="demo-btn" onclick="sendDemo('arch')">
+          <span class="badge info">Arch</span>
+          <span>Show architecture &amp; harness constraints</span>
+        </button>
+        <button class="demo-btn" onclick="endSession()">
+          <span class="badge session">End</span>
+          <span>End session and email assessment</span>
+        </button>
+      </div>
+
+      <div class="chat-input-area">
+        <textarea class="chat-input" id="chat-input" rows="1" placeholder="Type a message..." onkeydown="onInputKey(event)"></textarea>
+        <button class="send-btn" id="send-btn" onclick="sendUserMessage()">Send</button>
+      </div>
+    </div>
+
+    <!-- ─── Center: Timeline ─── -->
+    <div class="timeline-panel">
+      <div class="section-title">Harness Timeline</div>
+      <div class="timeline" id="timeline">
+        <div class="empty-state" id="timeline-empty">
+          <div class="empty-state-icon">&#9671;</div>
+          <div class="empty-state-text">Send a request to see the pipeline</div>
+        </div>
+      </div>
+
+      <!-- ─── Interview Section ─── -->
+      <div class="interview-panel" id="interview-section">
+        <div class="section-title">Architecture Overview</div>
+        <div class="arch-summary">
+          <div class="arch-card">
+            <div class="arch-card-label">Gateway</div>
+            <div class="arch-card-value">:8090</div>
+            <div class="arch-card-sub">Entry + Auth</div>
+          </div>
+          <div class="arch-card">
+            <div class="arch-card-label">Orchestrator</div>
+            <div class="arch-card-value">:5009</div>
+            <div class="arch-card-sub">Risk Routing</div>
+          </div>
+          <div class="arch-card">
+            <div class="arch-card-label">Counselor</div>
+            <div class="arch-card-value">:5010</div>
+            <div class="arch-card-sub">Agent Loop + RAG</div>
+          </div>
+          <div class="arch-card">
+            <div class="arch-card-label">Evaluator</div>
+            <div class="arch-card-value">:5011</div>
+            <div class="arch-card-sub">Risk Assessment</div>
+          </div>
+        </div>
+
+        <div class="section-title">Harness Constraint Points</div>
+        <ul class="constraint-list">
+          <li>Prompt Policy enforces max chars budget, cache-aware prefix, tool signature</li>
+          <li>Risk Policy gates Evaluator invocation on high-risk intent classification</li>
+          <li>Tool Registry controls which MCP tools are callable and validates schemas</li>
+          <li>Permission layer rejects unauthorized tool calls before execution</li>
+          <li>Run Store persists task_state, report, and trace.jsonl per run</li>
+          <li>Session Store maintains conversation memory across turns</li>
+        </ul>
+
+        <div class="section-title" style="margin-top:20px;">Feature Status</div>
+        <table class="feature-table" id="feature-table">
+          <thead>
+            <tr><th>Feature</th><th>Status</th><th>Next Step</th></tr>
+          </thead>
+          <tbody id="feature-tbody">
+            <tr><td colspan="3" style="color:var(--text-muted);text-align:center;">Loading...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- ─── Right: Run Details ─── -->
+    <div class="details-panel">
+      <div class="section-title">Run Details</div>
+
+      <div id="details-empty" class="empty-state">
+        <div class="empty-state-icon">&#9671;</div>
+        <div class="empty-state-text">No run yet</div>
+      </div>
+
+      <div id="details-content" class="hidden">
+
+        <div class="detail-group">
+          <div class="detail-group-title">Classification</div>
+          <div class="detail-row">
+            <span class="detail-key">Intent</span>
+            <span class="detail-val highlight-blue" id="d-intent">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Risk Level</span>
+            <span class="detail-val" id="d-risk">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Evaluator</span>
+            <span class="detail-val" id="d-evaluator">-</span>
+          </div>
+        </div>
+
+        <div class="detail-group">
+          <div class="detail-group-title">Run</div>
+          <div class="detail-row">
+            <span class="detail-key">Run ID</span>
+            <span class="detail-val" id="d-runid">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Status</span>
+            <span class="detail-val highlight-green" id="d-status">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Stop Reason</span>
+            <span class="detail-val" id="d-stopreason">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Attempts</span>
+            <span class="detail-val" id="d-attempts">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Tool Steps</span>
+            <span class="detail-val" id="d-toolsteps">-</span>
+          </div>
+        </div>
+
+        <div class="detail-group">
+          <div class="detail-group-title">Prompt Metadata</div>
+          <div class="detail-row">
+            <span class="detail-key">Prompt Chars</span>
+            <span class="detail-val" id="d-promptchars">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Input Tokens</span>
+            <span class="detail-val" id="d-inputtok">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Output Tokens</span>
+            <span class="detail-val" id="d-outputtok">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Cache Hit</span>
+            <span class="detail-val" id="d-cachehit">-</span>
+          </div>
+          <div class="detail-row">
+            <span class="detail-key">Prefix Hash</span>
+            <span class="detail-val" id="d-prefixhash">-</span>
+          </div>
+        </div>
+
+        <div class="detail-group">
+          <div class="detail-group-title">MCP Triggers</div>
+          <div id="d-mcp-triggers" style="font-size:0.82rem;color:var(--text-secondary);">None</div>
+        </div>
+
+        <div class="detail-group">
+          <div class="detail-group-title">Multimodal Emotion</div>
+          <div id="d-multimodal" style="font-size:0.82rem;color:var(--text-secondary);">None</div>
+        </div>
+
+        <div class="detail-group">
+          <div class="detail-group-title">Trace Events</div>
+          <div class="json-block" id="d-trace">[]</div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src="app.js?v=20260505-stream-tts-fix"></script>
+</body>
+</html>

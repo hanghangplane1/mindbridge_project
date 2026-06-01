@@ -1,0 +1,39 @@
+# Local build & deps (do not commit)
+/build/
+/build-*/
+/**/build_test/
+/.deps/
+/.mindbridge/
+/node_modules/
+/.cache/
+/.chroma_data/
+/.venv-sandbox/
+/a2a/third_party/grpc/
+/mindbridge_harness/ebpf/agentsight_process/.output/
+/mindbridge_harness/ebpf/agentsight_process/process_new
+/mindbridge_harness/ebpf/agentsight_process/sslsniff
+/mindbridge_harness/ebpf/agentsight_process/stdiocap
+
+# Editor
+*.swp
+*~
+__pycache__/
+*.pyc
+
+# Local assistant/tool state
+/.agent/
+/.agents/
+/.claude/
+/.codex/
+/.vscode/
+
+# Runtime/config secrets and generated state
+.env
+.env.*
+!.env.example
+*.log
+*.sqlite
+*.sqlite-*
+*.db
+*.pem
+*.key

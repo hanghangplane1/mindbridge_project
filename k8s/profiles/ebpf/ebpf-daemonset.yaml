@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: ebpf-monitor
+  namespace: mindbridge
+  labels:
+    app: ebpf-monitor
+spec:
+  selector:
+    matchLabels:
+      app: ebpf-monitor
+  template:
+    metadata:
+      labels:
+        app: ebpf-monitor
+    spec:
+      hostPID: true
+      containers:
+      - name: ebpf-monitor
+        image: mindbridge:platform-dev
+        imagePullPolicy: IfNotPresent
+        securityContext:
+          privileged: true
+          capabilities:
+            add: ["SYS_ADMIN", "SYS_PTRACE", "NET_ADMIN", "BPF", "PERFMON"]
+        command: ["/bin/sh", "-c"]
+        args:
+        - "echo 'eBPF profile is opt-in; build/run helper integration is node-specific.' && sleep infinity"
+        volumeMounts:
+        - name: sys-kernel
+          mountPath: /sys/kernel
+          readOnly: true
+        - name: kernel-modules
+          mountPath: /lib/modules
+          readOnly: true
+      volumes:
+      - name: sys-kernel
+        hostPath:
+          path: /sys/kernel
+      - name: kernel-modules
+        hostPath:
+          path: /lib/modules

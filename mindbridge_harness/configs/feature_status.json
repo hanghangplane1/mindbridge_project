@@ -1,0 +1,466 @@
+{
+  "schema_version": 2,
+  "last_updated": "2026-05-31",
+  "features": [
+    {
+      "name": "industrial_entrypoints",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/apps/gateway_main.cpp",
+        "mindbridge_harness/apps/orchestrator_main.cpp",
+        "mindbridge_harness/apps/counselor_main.cpp",
+        "mindbridge_harness/apps/evaluator_main.cpp"
+      ],
+      "verify_command": "cmake --build build --target mindbridge_gateway mindbridge_orchestrator mindbridge_counselor mindbridge_evaluator -j2",
+      "next_step": "add richer orchestrator routing strategy and health-based fallback"
+    },
+    {
+      "name": "consistent_hash_agent_routing",
+      "status": "implemented",
+      "evidence": [
+        "orchestrator/include/agent_rpc/orchestrator/agent_info.h",
+        "orchestrator/include/agent_rpc/orchestrator/agent_router.h",
+        "orchestrator/src/agent_router.cpp",
+        "mindbridge_harness/apps/orchestrator_main.cpp",
+        "mindbridge_harness/src/routing/registry_agent_router.cpp",
+        "examples/mindcare/counselor_agent_main.cpp",
+        "scripts/start_demo.sh"
+      ],
+      "verify_command": "cmake -S . -B build -DBUILD_TESTING=ON && cmake --build build --target test_agent_router_properties -j2 && ctest --test-dir build -R AgentRouterPropertiesTest --output-on-failure",
+      "next_step": "add deeper live integration coverage for endpoint recovery and SSE disconnect cases"
+    },
+    {
+      "name": "asio_network_high_availability",
+      "status": "partial",
+      "evidence": [
+        "mindbridge_harness/include/mindbridge/net/async_http_server.hpp",
+        "mindbridge_harness/include/mindbridge/net/http_client.hpp",
+        "mindbridge_harness/include/mindbridge/net/managed_endpoint_router.hpp",
+        "mindbridge_harness/src/net/async_http_server.cpp",
+        "mindbridge_harness/src/net/http_client.cpp",
+        "mindbridge_harness/src/net/managed_endpoint_router.cpp",
+        "mindbridge_harness/apps/gateway_main.cpp",
+        "mindbridge_harness/apps/orchestrator_main.cpp"
+      ],
+      "verify_command": "bash scripts/verify_mindbridge.sh",
+      "next_step": "add WebSocket/WSS server endpoints and automated concurrent SSE disconnect tests"
+    },
+    {
+      "name": "net_websocket_demo_and_load_client",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/include/mindbridge/net/websocket_client.hpp",
+        "mindbridge_harness/src/net/websocket_client.cpp",
+        "mindbridge_harness/apps/net_demo_main.cpp",
+        "mindbridge_harness/configs/net_demo.json",
+        "mindbridge_harness/apps/gateway_main.cpp"
+      ],
+      "verify_command": "cmake --build build --target mindbridge_net_demo mindbridge_gateway -j2",
+      "next_step": "add automated smoke test that starts gateway and runs net_demo with websocket-only config"
+    },
+    {
+      "name": "aksk_login_user_isolation",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/include/mindbridge/auth/auth_service.hpp",
+        "mindbridge_harness/src/auth/auth_service.cpp",
+        "mindbridge_harness/apps/gateway_main.cpp",
+        "frontend/demo/index.html",
+        "frontend/demo/app.js"
+      ],
+      "verify_command": "MINDBRIDGE_AUTH_REQUIRED=true MINDBRIDGE_AUTH_BOOTSTRAP_USERS='[...]' ./build/mindbridge_harness/mindbridge_gateway 8090",
+      "next_step": "add automated live test that logs in two users and verifies conversation/run isolation"
+    },
+    {
+      "name": "orchestrator_evaluator_risk_loop",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/apps/orchestrator_main.cpp",
+        "mindbridge_harness/apps/evaluator_main.cpp",
+        "mindbridge_harness/apps/counselor_main.cpp",
+        "mindbridge_harness/src/runtime/prompt_policy.cpp",
+        "frontend/demo/app.js"
+      ],
+      "verify_command": "bash scripts/verify_mindbridge.sh",
+      "next_step": "add live integration test for session/end with a mocked MCP email endpoint"
+    },
+    {
+      "name": "runtime_harness_mainpath",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/include/mindbridge/runtime/runtime_context.hpp",
+        "mindbridge_harness/include/mindbridge/runtime/prompt_policy.hpp",
+        "mindbridge_harness/include/mindbridge/runtime/conversation_memory.hpp",
+        "mindbridge_harness/include/mindbridge/runtime/risk_policy.hpp",
+        "mindbridge_harness/include/mindbridge/harness/response_validator.hpp",
+        "mindbridge_harness/src/runtime/prompt_policy.cpp",
+        "mindbridge_harness/src/harness/response_validator.cpp",
+        "mindbridge_harness/apps/response_validator_test_main.cpp"
+      ],
+      "verify_command": "cmake --build build --target mindbridge_response_validator_test mindbridge_counselor -j2 && ./build/mindbridge_harness/mindbridge_response_validator_test",
+      "next_step": "rerun PsychoBench live judge after prompt-depth tuning and keep streaming-path response validation"
+    },
+    {
+      "name": "distributed_state_store_mvp",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/include/mindbridge/state/distributed_state_store.hpp",
+        "mindbridge_harness/src/state/distributed_state_store.cpp",
+        "mindbridge_harness/apps/state_demo_main.cpp",
+        "scripts/verify_state_mysql_live.sh",
+        "mindbridge_harness/src/tools/core_tools.cpp",
+        "docs/architecture.md",
+        "docs/harness_engineering.md"
+      ],
+      "verify_command": "cmake --build build --target mindbridge_state_demo mindbridge_harness -j2 && ./build/mindbridge_harness/mindbridge_state_demo && bash scripts/verify_state_mysql_live.sh",
+      "next_step": "add live multi-process web conversation coverage for the formal counselor path"
+    },
+    {
+      "name": "formal_counselor_state_replication",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/apps/counselor_main.cpp",
+        "mindbridge_harness/include/mindbridge/state/distributed_state_store.hpp",
+        "mindbridge_harness/src/tools/core_tools.cpp",
+        "scripts/start_demo.sh",
+        "docs/architecture.md",
+        "docs/harness_engineering.md"
+      ],
+      "verify_command": "MINDBRIDGE_STATE_STORE_ENABLED=true cmake --build build --target mindbridge_counselor mindbridge_harness -j2",
+      "next_step": "add a browser-facing replication status panel after the backend status endpoint is exercised in live demo"
+    },
+    {
+      "name": "cloud_storage_mysql_redis_fastdfs_design",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/configs/cloud_storage_mysql.sql",
+        "infra/cloud_storage/docker-compose.yaml",
+        "mindbridge_harness/include/mindbridge/storage/cloud_storage.hpp",
+        "mindbridge_harness/src/storage/cloud_storage.cpp",
+        "scripts/start_mindbridge_cloud_storage.sh",
+        "scripts/verify_cloud_storage_live.sh",
+        "docs/architecture.md",
+        "docs/harness_engineering.md"
+      ],
+      "verify_command": "MINDBRIDGE_STORAGE_BACKEND=cloud bash scripts/verify_cloud_storage_live.sh",
+      "next_step": "add deletion/share/PV workflows after the upload/list/download loop stabilizes"
+    },
+    {
+      "name": "cloud_storage_gateway_endpoints",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/include/mindbridge/storage/cloud_storage.hpp",
+        "mindbridge_harness/src/storage/cloud_storage.cpp",
+        "mindbridge_harness/apps/gateway_main.cpp",
+        "frontend/demo/app.js",
+        "scripts/verify_cloud_storage_smoke.sh",
+        "docs/harness_engineering.md"
+      ],
+      "verify_command": "bash scripts/verify_cloud_storage_smoke.sh",
+      "next_step": "keep fake backend in CI and run scripts/verify_cloud_storage_live.sh for Redis/MySQL/FastDFS environments"
+    },
+    {
+      "name": "frontend_cloud_storage_dashboard",
+      "status": "implemented",
+      "evidence": [
+        "frontend/demo/index.html",
+        "frontend/demo/app.js",
+        "frontend/demo/styles.css",
+        "frontend/demo/README.md"
+      ],
+      "verify_command": "bash scripts/verify_mindbridge.sh",
+      "next_step": "add backend-backed delete/share/PV actions after those workflows are formally supported by Gateway storage APIs"
+    },
+    {
+      "name": "runtime_utf8_safe_context",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/include/mindbridge/runtime/utf8.hpp",
+        "mindbridge_harness/src/runtime/context_manager.cpp",
+        "mindbridge_harness/src/runtime/conversation_memory.cpp",
+        "mindbridge_harness/src/model/openai_compatible_model_client.cpp",
+        "mindbridge_harness/src/model/ollama_model_client.cpp"
+      ],
+      "verify_command": "bash scripts/verify_mindbridge.sh",
+      "next_step": "add regression coverage for malformed provider text and multibyte prompt truncation"
+    },
+    {
+      "name": "streaming_latency_pipeline",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/src/harness/agent_loop.cpp",
+        "mindbridge_harness/apps/gateway_main.cpp",
+        "mindbridge_harness/apps/orchestrator_main.cpp",
+        "mindbridge_harness/apps/counselor_main.cpp",
+        "frontend/demo/app.js",
+        "scripts/serve_demo_frontend.py"
+      ],
+      "verify_command": "bash scripts/verify_mindbridge.sh",
+      "next_step": "add automated SSE contract tests for token streaming, browser cache busting, and TTS audio chunk events"
+    },
+    {
+      "name": "openai_compatible_model_client",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/include/mindbridge/model/openai_compatible_model_client.hpp",
+        "mindbridge_harness/src/model/openai_compatible_model_client.cpp",
+        "mindbridge_harness/include/mindbridge/apps/app_support.hpp",
+        "scripts/start_demo.sh"
+      ],
+      "verify_command": "MINDBRIDGE_MODEL_BASE_URL=https://your-openai-compatible-endpoint MINDBRIDGE_MODEL_API_KEY=... MINDBRIDGE_MODEL_NAME=qwen2.5-7b-instruct ./build/mindbridge_harness/mindbridge_counselor 5010",
+      "next_step": "add provider-specific circuit breaker metrics for repeated upstream auth and 5xx errors"
+    },
+    {
+      "name": "tool_registry_mcp_integration",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/include/mindbridge/tools/core_tools.hpp",
+        "mindbridge_harness/src/tools/core_tools.cpp"
+      ],
+      "verify_command": "bash scripts/verify_mindbridge.sh",
+      "next_step": "replace endpoint forwarding stubs with full MCP client calls and result schema checks"
+    },
+    {
+      "name": "gateway_and_nginx_hardening",
+      "status": "partial",
+      "evidence": [
+        "mindbridge_harness/apps/gateway_main.cpp",
+        "mindbridge_harness/configs/nginx.conf",
+        "a2a/include/a2a/examples/http_server.hpp"
+      ],
+      "verify_command": "curl -s http://127.0.0.1:8090/api/health",
+      "next_step": "upgrade from token placeholder to JWT/RBAC, add rate-limit implementation, and add an automated SSE client-disconnect regression test"
+    },
+    {
+      "name": "benchmark_quality_layer",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/src/benchmark/benchmark_runner.cpp",
+        "mindbridge_harness/benchmarks/mindbridge_tasks.json",
+        "benchmarks/psycho_bench/run_grm.py",
+        "benchmarks/psycho_bench/rerun_mindbridge_grm.py",
+        "benchmarks/psycho_bench/test_psycho_bench.py"
+      ],
+      "verify_command": "./build/mindbridge_harness/mindbridge_benchmark && cd benchmarks/psycho_bench && ../../.venv-sandbox/bin/python -m unittest test_psycho_bench.py -v",
+      "next_step": "rerun live PsychoBench judge data and require python run_grm.py --require-target before claiming qwen-plus-2pct"
+    },
+    {
+      "name": "coding_harness_p0",
+      "status": "implemented",
+      "evidence": [
+        "AGENTS.md",
+        "scripts/verify_mindbridge.sh",
+        "docs/harness_engineering.md"
+      ],
+      "verify_command": "bash scripts/verify_mindbridge.sh",
+      "next_step": "add CI job to run verify script on every PR"
+    },
+    {
+      "name": "pico_tool_governance",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/include/mindbridge/harness/tool.hpp",
+        "mindbridge_harness/src/harness/tool_registry.cpp",
+        "mindbridge_harness/src/harness/agent_loop.cpp",
+        "mindbridge_harness/src/tools/core_tools.cpp"
+      ],
+      "verify_command": "cmake --build build --target mindbridge_harness -j2",
+      "next_step": "add richer schema constraints (enum/range/pattern) and policy-driven high-risk approval"
+    },
+    {
+      "name": "pico_run_session_artifacts",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/include/mindbridge/runtime/task_state.hpp",
+        "mindbridge_harness/include/mindbridge/runtime/run_store.hpp",
+        "mindbridge_harness/include/mindbridge/runtime/session_store.hpp",
+        "mindbridge_harness/src/runtime/run_store.cpp",
+        "mindbridge_harness/src/runtime/session_store.cpp"
+      ],
+      "verify_command": "bash scripts/verify_mindbridge.sh",
+      "next_step": "add resume loading path and replay protection for repeated run_id"
+    },
+    {
+      "name": "pico_structured_memory_context",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/include/mindbridge/runtime/conversation_memory.hpp",
+        "mindbridge_harness/include/mindbridge/runtime/context_manager.hpp",
+        "mindbridge_harness/src/runtime/context_manager.cpp"
+      ],
+      "verify_command": "cmake --build build --target mindbridge_counselor -j2",
+      "next_step": "introduce relevance scoring and freshness TTL for knowledge summaries"
+    },
+    {
+      "name": "pico_prompt_prefix_runtime_loop",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/include/mindbridge/runtime/prompt_prefix.hpp",
+        "mindbridge_harness/src/runtime/prompt_prefix.cpp",
+        "mindbridge_harness/src/harness/agent_loop.cpp",
+        "mindbridge_harness/include/mindbridge/cache/caffeine_cache.h"
+      ],
+      "verify_command": "bash scripts/verify_mindbridge.sh",
+      "next_step": "promote prompt cache to cache the full ContextBuildOutput when inputs are stable"
+    },
+    {
+      "name": "pico_benchmark_evidence_chain",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/src/benchmark/benchmark_runner.cpp",
+        "mindbridge_harness/apps/benchmark_main.cpp",
+        "mindbridge_harness/benchmarks/mindbridge_tasks.json"
+      ],
+      "verify_command": "./build/mindbridge_harness/mindbridge_benchmark",
+      "next_step": "bind contract verifier to real run artifacts generated in CI pipelines"
+    },
+    {
+      "name": "multimodal_qwen_emotion_pipeline",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/include/mindbridge/multimodal/multimodal_analyzer.hpp",
+        "mindbridge_harness/src/multimodal/dashscope_qwen_multimodal_analyzer.cpp",
+        "mindbridge_harness/src/multimodal/mimo_multimodal_analyzer.cpp",
+        "mindbridge_harness/src/multimodal/multimodal_tools.cpp",
+        "mindbridge_harness/apps/orchestrator_main.cpp",
+        "frontend/demo/app.js"
+      ],
+      "verify_command": "MINDBRIDGE_MULTIMODAL_PROVIDER=dashscope DASHSCOPE_API_KEY=... bash scripts/verify_mindbridge.sh",
+      "next_step": "add mocked DashScope compatible endpoint tests for image request parts, reasoning_content fallback, and non-JSON fallback"
+    },
+    {
+      "name": "dashscope_native_model_client",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/include/mindbridge/model/dashscope_model_client.hpp",
+        "mindbridge_harness/src/model/dashscope_model_client.cpp",
+        "mindbridge_harness/include/mindbridge/apps/app_support.hpp",
+        "scripts/start_demo_dashscope.sh",
+        "docs/model_strategy.md"
+      ],
+      "verify_command": "MINDBRIDGE_MODEL_PROVIDER=dashscope_native DASHSCOPE_API_KEY=... MINDBRIDGE_REQUIRE_REMOTE_MODEL=1 cmake --build build --target mindbridge_counselor -j2",
+      "next_step": "add native DashScope streaming SSE support and mocked endpoint tests for text-generation and multimodal-generation routing"
+    },
+    {
+      "name": "dashscope_fun_asr_realtime",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/include/mindbridge/speech/speech_recognizer.hpp",
+        "mindbridge_harness/src/speech/dashscope_realtime_speech_recognizer.cpp",
+        "mindbridge_harness/src/speech/speech_tools.cpp",
+        "mindbridge_harness/apps/gateway_main.cpp",
+        "frontend/demo/app.js"
+      ],
+      "verify_command": "MINDBRIDGE_ASR_PROVIDER=dashscope DASHSCOPE_API_KEY=... bash scripts/verify_mindbridge.sh",
+      "next_step": "add mocked websocket test for task-started/result-generated/task-finished ASR events"
+    },
+    {
+      "name": "dashscope_cosyvoice_tts_response",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/include/mindbridge/speech/speech_synthesizer.hpp",
+        "mindbridge_harness/src/speech/dashscope_cosyvoice_synthesizer.cpp",
+        "mindbridge_harness/src/speech/mimo_speech_synthesizer.cpp",
+        "mindbridge_harness/src/speech/speech_tools.cpp",
+        "mindbridge_harness/apps/gateway_main.cpp",
+        "frontend/demo/app.js"
+      ],
+      "verify_command": "MINDBRIDGE_TTS_PROVIDER=dashscope DASHSCOPE_API_KEY=... MINDBRIDGE_DASHSCOPE_TTS_VOICE_ID=... bash scripts/verify_mindbridge.sh",
+      "next_step": "add mocked websocket test for CosyVoice model/voice compatibility, binary audio frames, and task-finished events"
+    },
+    {
+      "name": "ebpf_boundary_observability",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/ebpf/agentsight_process/process_new.bpf.c",
+        "mindbridge_harness/ebpf/agentsight_process/process_new.c",
+        "mindbridge_harness/ebpf/agentsight_process/stdiocap.bpf.c",
+        "mindbridge_harness/ebpf/agentsight_process/stdiocap.c",
+        "mindbridge_harness/ebpf/agentsight_process/stdiocap.h",
+        "mindbridge_harness/ebpf/agentsight_process/sslsniff.bpf.c",
+        "mindbridge_harness/ebpf/agentsight_process/sslsniff.c",
+        "mindbridge_harness/ebpf/agentsight_process/sslsniff.h",
+        "mindbridge_harness/ebpf/agentsight_process/process_ext/bpf_common.h",
+        "mindbridge_harness/ebpf/agentsight_process/process_ext/bpf_fs.h",
+        "mindbridge_harness/ebpf/agentsight_process/process_ext/bpf_net.h",
+        "mindbridge_harness/ebpf/agentsight_process/process_ext/resource_sampler.h",
+        "mindbridge_harness/CMakeLists.txt",
+        "mindbridge_harness/include/mindbridge/observability/ebpf_monitor.hpp",
+        "mindbridge_harness/include/mindbridge/observability/boundary_trace_correlator.hpp",
+        "mindbridge_harness/src/observability/ebpf_monitor.cpp",
+        "mindbridge_harness/src/observability/boundary_trace_correlator.cpp",
+        "mindbridge_harness/src/runtime/run_store.cpp",
+        "mindbridge_harness/src/harness/agent_loop.cpp",
+        "mindbridge_harness/apps/gateway_main.cpp",
+        "frontend/demo/index.html",
+        "frontend/demo/app.js",
+        "frontend/demo/styles.css",
+        "scripts/verify_ebpf_live.sh",
+        "docs/architecture.md",
+        "docs/harness_engineering.md"
+      ],
+      "verify_command": "bash scripts/verify_ebpf_live.sh && bash scripts/verify_mindbridge.sh",
+      "next_step": "add live screenshot regression for Observability timeline filters and CPU/Memory dashboard once browser automation is part of CI"
+    },
+    {
+      "name": "sandboxed_browser_qa",
+      "status": "implemented",
+      "evidence": [
+        "sandbox/browser_qa/mindbridge_browser_qa.py",
+        "sandbox/browser_qa/fake_openai_server.py",
+        "sandbox/browser_qa/test_mindbridge_browser_qa.py",
+        "sandbox/browser_qa/README.md",
+        "scripts/run_sandbox_browser_qa.sh",
+        "scripts/verify_sandbox_browser_qa_dashscope_live.sh",
+        "scripts/verify_sandbox_browser_qa.sh",
+        "docs/harness_engineering.md"
+      ],
+      "verify_command": "bash scripts/verify_sandbox_browser_qa.sh",
+      "next_step": "extend the business QA matrix with authenticated multi-user isolation once auth-required sandbox runs are enabled"
+    },
+    {
+      "name": "gateway_visible_conversation_history",
+      "status": "implemented",
+      "evidence": [
+        "mindbridge_harness/apps/gateway_main.cpp",
+        "mindbridge_harness/include/mindbridge/state/distributed_state_store.hpp",
+        "mindbridge_harness/src/state/distributed_state_store.cpp",
+        "frontend/demo/index.html",
+        "frontend/demo/app.js",
+        "docs/harness_engineering.md"
+      ],
+      "verify_command": "bash scripts/verify_mindbridge.sh",
+      "next_step": "add a dedicated history smoke test that sends a demo turn and verifies /api/conversations reads persisted user and assistant turns from DistributedStateStore"
+    },
+    {
+      "name": "cloud_native_agent_platform_mvp",
+      "status": "partial",
+      "evidence": [
+        "mindbridge_harness/include/mindbridge/platform/platform_types.hpp",
+        "mindbridge_harness/include/mindbridge/platform/platform_store.hpp",
+        "mindbridge_harness/include/mindbridge/platform/universal_event_mapper.hpp",
+        "mindbridge_harness/src/platform/platform_store.cpp",
+        "mindbridge_harness/src/platform/universal_event_mapper.cpp",
+        "mindbridge_harness/apps/platform_main.cpp",
+        "mindbridge_harness/apps/platform_store_test_main.cpp",
+        "frontend/demo/index.html",
+        "frontend/demo/app.js",
+        "frontend/demo/styles.css",
+        "frontend/demo/README.md",
+        "Dockerfile",
+        ".dockerignore",
+        "start-service.sh",
+        "k8s/base",
+        "k8s/profiles/dev-k3s",
+        "k8s/profiles/ebpf",
+        "scripts/k8s-platform-deploy.sh",
+        "scripts/verify_platform_frontend.sh",
+        "scripts/verify_platform_browser_smoke.sh",
+        "docs/architecture.md",
+        "docs/harness_engineering.md"
+      ],
+      "verify_command": "cmake --build build --target mindbridge_platform mindbridge_platform_store_test -j2 && ./build/mindbridge_harness/mindbridge_platform_store_test && bash scripts/verify_platform_frontend.sh && bash scripts/verify_platform_browser_smoke.sh && bash scripts/verify_mindbridge.sh",
+      "next_step": "add live K3s deploy verification and multi-core adapter registration when kubectl is available"
+    }
+  ]
+}

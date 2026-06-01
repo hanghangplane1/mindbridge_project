@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: platform
+  namespace: mindbridge
+  labels:
+    app: platform
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: platform
+  template:
+    metadata:
+      labels:
+        app: platform
+    spec:
+      containers:
+      - name: platform
+        image: mindbridge:platform-dev
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8077
+          name: http
+        envFrom:
+        - configMapRef:
+            name: mindbridge-config
+        - secretRef:
+            name: mindbridge-secrets
+            optional: true
+        env:
+        - name: SERVICE_NAME
+          value: platform
+        readinessProbe:
+          httpGet:
+            path: /api/platform/health
+            port: 8077
+          initialDelaySeconds: 5
+          periodSeconds: 10
+        livenessProbe:
+          httpGet:
+            path: /api/platform/health
+            port: 8077
+          initialDelaySeconds: 15
+          periodSeconds: 30
+        volumeMounts:
+        - name: platform-data
+          mountPath: /app/.mindbridge/platform
+        - name: run-artifacts
+          mountPath: /app/.mindbridge/runs
+      volumes:
+      - name: platform-data
+        persistentVolumeClaim:
+          claimName: platform-data
+      - name: run-artifacts
+        persistentVolumeClaim:
+          claimName: run-artifacts

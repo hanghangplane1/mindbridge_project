@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mindbridge-config
+  namespace: mindbridge
+data:
+  MINDBRIDGE_MODEL_PROVIDER: "dashscope_native"
+  MINDBRIDGE_MODEL_NAME: "qwen-plus"
+  MINDBRIDGE_REQUIRE_REMOTE_MODEL: "1"
+  MINDBRIDGE_PLATFORM_GATEWAY_URL: "http://gateway-svc:8090"
+  MINDBRIDGE_ORCHESTRATOR_URLS: "http://orchestrator-svc:5009"
+  MINDBRIDGE_COUNSELOR_URLS: "http://counselor-0.counselor-svc:5010,http://counselor-1.counselor-svc:5010"
+  MINDBRIDGE_EVALUATOR_URLS: "http://evaluator-0.evaluator-svc:5011,http://evaluator-1.evaluator-svc:5011"
+  MINDBRIDGE_RUN_ROOT: "/app/.mindbridge"
+  MINDBRIDGE_PLATFORM_DB_PATH: "/app/.mindbridge/platform/platform.sqlite"
+  MINDBRIDGE_STATE_STORE_ENABLED: "true"
+  MINDBRIDGE_STATE_BACKEND: "sqlite"
+  MINDBRIDGE_EBPF_ENABLED: "0"

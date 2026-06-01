@@ -1,0 +1,341 @@
+person_id,agent,task_id,source,topic,difficulty,theta,theta_se,avg_score
+deepseek-raw::cp_Career_1,deepseek-raw,cp_Career_1,CPsyCounE,Career,L2,0.11339065912353813,0.6708203654979746,8.57
+deepseek-raw::cp_Career_2,deepseek-raw,cp_Career_2,CPsyCounE,Career,L2,-1.5115124028733673,0.6581198358557849,7.71
+deepseek-raw::cp_Career_3,deepseek-raw,cp_Career_3,CPsyCounE,Career,L2,0.03392633732974661,0.6778424157955059,8.57
+deepseek-raw::cp_Career_4,deepseek-raw,cp_Career_4,CPsyCounE,Career,L2,0.11339065912353813,0.6708203654979746,8.57
+deepseek-raw::cp_Career_5,deepseek-raw,cp_Career_5,CPsyCounE,Career,L1,0.18504958079325431,0.6851996817157046,8.71
+deepseek-raw::cp_Education_1,deepseek-raw,cp_Education_1,CPsyCounE,Education,L2,-0.3714728958383828,0.6629381970023475,8.29
+deepseek-raw::cp_Education_2,deepseek-raw,cp_Education_2,CPsyCounE,Education,L2,0.11339065912353813,0.6708203654979746,8.57
+deepseek-raw::cp_Education_3,deepseek-raw,cp_Education_3,CPsyCounE,Education,L2,-0.3787160198085732,0.6797466526972198,8.43
+deepseek-raw::cp_Education_4,deepseek-raw,cp_Education_4,CPsyCounE,Education,L2,1.0479669205370612,0.7252762144999828,9.29
+deepseek-raw::cp_Education_5,deepseek-raw,cp_Education_5,CPsyCounE,Education,L1,0.04350167972787647,0.6842416511237145,8.57
+deepseek-raw::cp_Emotion&Stress_1,deepseek-raw,cp_Emotion&Stress_1,CPsyCounE,Emotion&Stress,L2,-0.13386925424048368,0.692922957223589,8.43
+deepseek-raw::cp_Emotion&Stress_2,deepseek-raw,cp_Emotion&Stress_2,CPsyCounE,Emotion&Stress,L2,-1.2401443219539796,0.6975264927097546,7.71
+deepseek-raw::cp_Emotion&Stress_3,deepseek-raw,cp_Emotion&Stress_3,CPsyCounE,Emotion&Stress,L2,1.0479669205370612,0.7252762144999828,9.29
+deepseek-raw::cp_Emotion&Stress_4,deepseek-raw,cp_Emotion&Stress_4,CPsyCounE,Emotion&Stress,L2,1.0479669205370612,0.7252762144999828,9.29
+deepseek-raw::cp_Emotion&Stress_5,deepseek-raw,cp_Emotion&Stress_5,CPsyCounE,Emotion&Stress,L2,0.48759289592793387,0.6996126473257509,9.0
+deepseek-raw::cp_Family Relationship_1,deepseek-raw,cp_Family Relationship_1,CPsyCounE,Family Relationship,L2,0.053065793425235555,0.6814884540193117,8.57
+deepseek-raw::cp_Family Relationship_2,deepseek-raw,cp_Family Relationship_2,CPsyCounE,Family Relationship,L3,0.7581905941188166,0.7119864057611767,9.14
+deepseek-raw::cp_Family Relationship_3,deepseek-raw,cp_Family Relationship_3,CPsyCounE,Family Relationship,L3,-2.041553127434857,0.7135752969573866,6.14
+deepseek-raw::cp_Family Relationship_4,deepseek-raw,cp_Family Relationship_4,CPsyCounE,Family Relationship,L2,0.6581366941274834,0.7052425996762883,8.86
+deepseek-raw::cp_Family Relationship_5,deepseek-raw,cp_Family Relationship_5,CPsyCounE,Family Relationship,L2,-1.4164078649987388,nan,7.57
+deepseek-raw::cp_Love&Marriage_1,deepseek-raw,cp_Love&Marriage_1,CPsyCounE,Love&Marriage,L2,-1.4898800106788128,0.6887805768085918,7.57
+deepseek-raw::cp_Love&Marriage_2,deepseek-raw,cp_Love&Marriage_2,CPsyCounE,Love&Marriage,L2,0.06646649007450559,0.6752638745009162,8.57
+deepseek-raw::cp_Love&Marriage_3,deepseek-raw,cp_Love&Marriage_3,CPsyCounE,Love&Marriage,L2,-1.4164078649987388,nan,7.57
+deepseek-raw::cp_Love&Marriage_4,deepseek-raw,cp_Love&Marriage_4,CPsyCounE,Love&Marriage,L2,0.097576384711484,0.6878768397611312,8.57
+deepseek-raw::cp_Love&Marriage_5,deepseek-raw,cp_Love&Marriage_5,CPsyCounE,Love&Marriage,L2,-1.3902809725732268,0.6717391985671045,7.43
+deepseek-raw::cp_Mental Disease_1,deepseek-raw,cp_Mental Disease_1,CPsyCounE,Mental Disease,L2,0.097576384711484,0.6878768397611312,8.57
+deepseek-raw::cp_Mental Disease_2,deepseek-raw,cp_Mental Disease_2,CPsyCounE,Mental Disease,L2,0.39912929838664957,0.6865436865985729,8.71
+deepseek-raw::cp_Mental Disease_3,deepseek-raw,cp_Mental Disease_3,CPsyCounE,Mental Disease,L2,0.8732739714965146,0.7006856828399335,9.14
+deepseek-raw::cp_Mental Disease_4,deepseek-raw,cp_Mental Disease_4,CPsyCounE,Mental Disease,L2,-0.23421600173509577,0.6615709403347937,8.43
+deepseek-raw::cp_Mental Disease_5,deepseek-raw,cp_Mental Disease_5,CPsyCounE,Mental Disease,L2,-1.4164078649987388,nan,8.0
+deepseek-raw::cp_Self-growth_1,deepseek-raw,cp_Self-growth_1,CPsyCounE,Self-growth,L2,0.20096210897435163,0.6976606664864273,8.57
+deepseek-raw::cp_Self-growth_2,deepseek-raw,cp_Self-growth_2,CPsyCounE,Self-growth,L2,0.39912929838664957,0.6865436865985729,8.71
+deepseek-raw::cp_Self-growth_3,deepseek-raw,cp_Self-growth_3,CPsyCounE,Self-growth,L2,-0.1383630806578401,0.6822896215013773,8.43
+deepseek-raw::cp_Self-growth_4,deepseek-raw,cp_Self-growth_4,CPsyCounE,Self-growth,L1,-0.4508049517072954,0.6940560115069042,8.14
+deepseek-raw::cp_Self-growth_5,deepseek-raw,cp_Self-growth_5,CPsyCounE,Self-growth,L2,0.11339065912353813,0.6708203654979746,8.57
+deepseek-raw::cp_Sex_1,deepseek-raw,cp_Sex_1,CPsyCounE,Sex,L2,-0.4044416150560459,0.6793453064787842,8.29
+deepseek-raw::cp_Sex_2,deepseek-raw,cp_Sex_2,CPsyCounE,Sex,L2,0.7118217397534848,0.7181037866135389,9.14
+deepseek-raw::cp_Sex_3,deepseek-raw,cp_Sex_3,CPsyCounE,Sex,L2,0.097576384711484,0.6878768397611312,8.57
+deepseek-raw::cp_Sex_4,deepseek-raw,cp_Sex_4,CPsyCounE,Sex,L1,0.7586344666770648,0.7037364622727851,8.86
+deepseek-raw::cp_Sex_5,deepseek-raw,cp_Sex_5,CPsyCounE,Sex,L2,-2.2505085125156463,0.664956753180906,7.14
+deepseek-raw::cp_Social Relationship_1,deepseek-raw,cp_Social Relationship_1,CPsyCounE,Social Relationship,L2,-0.7378249209019383,0.6504788296256225,8.14
+deepseek-raw::cp_Social Relationship_2,deepseek-raw,cp_Social Relationship_2,CPsyCounE,Social Relationship,L2,-0.2651025891513023,0.6834421015510941,8.29
+deepseek-raw::cp_Social Relationship_3,deepseek-raw,cp_Social Relationship_3,CPsyCounE,Social Relationship,L2,-0.2651025891513023,0.6834421015510941,8.29
+deepseek-raw::cp_Social Relationship_4,deepseek-raw,cp_Social Relationship_4,CPsyCounE,Social Relationship,L1,0.7118217397534848,0.7181037866135389,9.14
+deepseek-raw::cp_Social Relationship_5,deepseek-raw,cp_Social Relationship_5,CPsyCounE,Social Relationship,L2,0.11339065912353813,0.6708203654979746,8.57
+deepseek-raw::crisis_001,deepseek-raw,crisis_001,manual,crisis,L3,0.4411038690568534,0.6997175991482321,9.0
+deepseek-raw::crisis_002,deepseek-raw,crisis_002,manual,crisis,L3,-1.0473918966100513,0.6792896201549496,8.14
+deepseek-raw::crisis_003,deepseek-raw,crisis_003,manual,crisis,L3,1.0479669205370612,0.7252762144999828,9.29
+deepseek-raw::crisis_004,deepseek-raw,crisis_004,manual,crisis,L3,-0.1383630806578401,0.6822896215013773,8.43
+deepseek-raw::crisis_005,deepseek-raw,crisis_005,manual,crisis,L1,1.1362260485970928,0.7135381875859079,9.14
+deepseek-raw::crisis_006,deepseek-raw,crisis_006,manual,crisis,L3,-0.07360089009609469,0.7044169094703776,8.71
+deepseek-raw::crisis_007,deepseek-raw,crisis_007,manual,crisis,L1,-0.3206990990251709,0.6875547313869068,8.29
+deepseek-raw::crisis_008,deepseek-raw,crisis_008,manual,crisis,L1,-0.5806362884101469,0.6635692096099186,8.14
+deepseek-raw::crisis_009,deepseek-raw,crisis_009,manual,crisis,L1,-1.1952715300988315,0.673555677575998,7.71
+deepseek-raw::crisis_010,deepseek-raw,crisis_010,manual,crisis,L2,-0.8360201004338058,0.6880069669397799,7.86
+deepseek-raw::psyqa_000,deepseek-raw,psyqa_000,PsyQA,general,L2,-1.4164078649987388,nan,6.71
+deepseek-raw::psyqa_001,deepseek-raw,psyqa_001,PsyQA,general,L2,-0.7419680596484582,0.6813001886101306,7.86
+deepseek-raw::psyqa_002,deepseek-raw,psyqa_002,PsyQA,general,L1,-0.4359212600598335,0.685004042364342,8.43
+deepseek-raw::psyqa_003,deepseek-raw,psyqa_003,PsyQA,general,L1,-1.4164078649987388,nan,7.0
+deepseek-raw::psyqa_004,deepseek-raw,psyqa_004,PsyQA,general,L1,1.1748084333198554,0.7078490025601243,9.14
+deepseek-raw::psyqa_005,deepseek-raw,psyqa_005,PsyQA,general,L3,-0.44581253634029977,0.6765006451612904,8.57
+deepseek-raw::psyqa_006,deepseek-raw,psyqa_006,PsyQA,general,L3,-0.916417089104555,0.6504360541423355,8.0
+deepseek-raw::psyqa_007,deepseek-raw,psyqa_007,PsyQA,general,L1,-0.7368272184164167,0.6758087524724081,8.14
+deepseek-raw::psyqa_008,deepseek-raw,psyqa_008,PsyQA,general,L1,-0.36789731056917613,0.7205068877688486,8.29
+deepseek-raw::psyqa_009,deepseek-raw,psyqa_009,PsyQA,general,L2,-1.4164078649987388,nan,8.29
+deepseek-raw::psyqa_010,deepseek-raw,psyqa_010,PsyQA,general,L1,-0.9518813856262355,0.6831304272973133,8.0
+deepseek-raw::psyqa_011,deepseek-raw,psyqa_011,PsyQA,general,L1,-1.6518102685542835,0.72221051168126,7.0
+deepseek-raw::psyqa_012,deepseek-raw,psyqa_012,PsyQA,general,L2,-0.3206990990251709,0.6875547313869068,8.29
+deepseek-raw::psyqa_013,deepseek-raw,psyqa_013,PsyQA,general,L1,-1.4695195618239425,0.6985475540336226,7.29
+deepseek-raw::psyqa_014,deepseek-raw,psyqa_014,PsyQA,general,L2,-0.6135262170327197,0.6896441825764078,8.29
+deepseek-raw::psyqa_015,deepseek-raw,psyqa_015,PsyQA,general,L2,-1.4164078649987388,nan,7.14
+deepseek-raw::psyqa_016,deepseek-raw,psyqa_016,PsyQA,general,L1,-0.4359212600598335,0.685004042364342,8.43
+deepseek-raw::psyqa_017,deepseek-raw,psyqa_017,PsyQA,general,L2,-1.951087506106864,0.7293235490857369,6.29
+deepseek-raw::psyqa_018,deepseek-raw,psyqa_018,PsyQA,general,L2,-0.9496020699231341,0.6884238707115823,7.71
+deepseek-raw::psyqa_019,deepseek-raw,psyqa_019,PsyQA,general,L1,-1.3370971735795487,0.6933947585265878,7.71
+deepseek-raw::psyqa_020,deepseek-raw,psyqa_020,PsyQA,general,L1,-1.2098333424796515,0.6563271366491187,7.86
+deepseek-raw::psyqa_021,deepseek-raw,psyqa_021,PsyQA,general,L2,-0.916417089104555,0.6504360541423355,8.0
+deepseek-raw::psyqa_022,deepseek-raw,psyqa_022,PsyQA,general,L1,-1.4164078649987388,nan,7.57
+deepseek-raw::psyqa_023,deepseek-raw,psyqa_023,PsyQA,general,L2,-1.4041065840659113,0.7061790860437404,7.57
+deepseek-raw::psyqa_024,deepseek-raw,psyqa_024,PsyQA,general,L1,-0.35646552576611323,0.6971439951062061,8.29
+deepseek-raw::psyqa_025,deepseek-raw,psyqa_025,PsyQA,general,L1,-1.4164078649987388,nan,8.0
+deepseek-raw::psyqa_026,deepseek-raw,psyqa_026,PsyQA,general,L1,-0.8654649336549645,0.7323467798077324,7.71
+deepseek-raw::psyqa_027,deepseek-raw,psyqa_027,PsyQA,general,L2,-1.4164078649987388,nan,7.86
+deepseek-raw::psyqa_028,deepseek-raw,psyqa_028,PsyQA,general,L1,-1.0542411784498849,0.6651304821478288,7.86
+deepseek-raw::psyqa_029,deepseek-raw,psyqa_029,PsyQA,general,L1,-1.728119019884318,0.6494289959638186,7.57
+doubao-raw::cp_Career_1,doubao-raw,cp_Career_1,CPsyCounE,Career,L2,-0.32945584494272606,0.7026016181378378,8.14
+doubao-raw::cp_Career_2,doubao-raw,cp_Career_2,CPsyCounE,Career,L2,-0.2651025891513023,0.6834421015510941,8.29
+doubao-raw::cp_Career_3,doubao-raw,cp_Career_3,CPsyCounE,Career,L2,0.39912929838664957,0.6865436865985729,8.71
+doubao-raw::cp_Career_4,doubao-raw,cp_Career_4,CPsyCounE,Career,L2,-1.4440436393942608,0.6458976973251351,7.71
+doubao-raw::cp_Career_5,doubao-raw,cp_Career_5,CPsyCounE,Career,L1,1.1362260485970928,0.7135381875859079,9.14
+doubao-raw::cp_Education_1,doubao-raw,cp_Education_1,CPsyCounE,Education,L2,-0.7525153874126757,0.6613241900366794,8.14
+doubao-raw::cp_Education_2,doubao-raw,cp_Education_2,CPsyCounE,Education,L2,0.11339065912353813,0.6708203654979746,8.57
+doubao-raw::cp_Education_3,doubao-raw,cp_Education_3,CPsyCounE,Education,L2,-0.9044315298035235,0.6560548535303703,8.14
+doubao-raw::cp_Education_4,doubao-raw,cp_Education_4,CPsyCounE,Education,L2,0.7118217397534848,0.7181037866135389,9.14
+doubao-raw::cp_Education_5,doubao-raw,cp_Education_5,CPsyCounE,Education,L1,-1.4164078649987388,nan,7.71
+doubao-raw::cp_Emotion&Stress_1,doubao-raw,cp_Emotion&Stress_1,CPsyCounE,Emotion&Stress,L2,-1.557336996614338,0.6591882850150824,7.57
+doubao-raw::cp_Emotion&Stress_2,doubao-raw,cp_Emotion&Stress_2,CPsyCounE,Emotion&Stress,L2,-0.5291320696256667,0.7062088024159153,8.0
+doubao-raw::cp_Emotion&Stress_3,doubao-raw,cp_Emotion&Stress_3,CPsyCounE,Emotion&Stress,L2,0.11339065912353813,0.6708203654979746,8.57
+doubao-raw::cp_Emotion&Stress_4,doubao-raw,cp_Emotion&Stress_4,CPsyCounE,Emotion&Stress,L2,-0.086896074285804,0.6779198831842277,8.43
+doubao-raw::cp_Emotion&Stress_5,doubao-raw,cp_Emotion&Stress_5,CPsyCounE,Emotion&Stress,L2,-0.26015317778535796,0.6908387923190467,8.29
+doubao-raw::cp_Family Relationship_1,doubao-raw,cp_Family Relationship_1,CPsyCounE,Family Relationship,L2,0.11339065912353813,0.6708203654979746,8.57
+doubao-raw::cp_Family Relationship_2,doubao-raw,cp_Family Relationship_2,CPsyCounE,Family Relationship,L3,-0.6394967409000378,0.7261537378939299,7.29
+doubao-raw::cp_Family Relationship_3,doubao-raw,cp_Family Relationship_3,CPsyCounE,Family Relationship,L3,-0.8170456427374623,0.6773547051468313,8.0
+doubao-raw::cp_Family Relationship_4,doubao-raw,cp_Family Relationship_4,CPsyCounE,Family Relationship,L2,-0.1740794160075365,0.6859165519382583,8.43
+doubao-raw::cp_Family Relationship_5,doubao-raw,cp_Family Relationship_5,CPsyCounE,Family Relationship,L2,-0.23421600173509577,0.6615709403347937,8.43
+doubao-raw::cp_Love&Marriage_1,doubao-raw,cp_Love&Marriage_1,CPsyCounE,Love&Marriage,L2,-1.5115124028733673,0.6581198358557849,7.71
+doubao-raw::cp_Love&Marriage_2,doubao-raw,cp_Love&Marriage_2,CPsyCounE,Love&Marriage,L2,-0.4400181104798596,0.6661350265642202,8.29
+doubao-raw::cp_Love&Marriage_3,doubao-raw,cp_Love&Marriage_3,CPsyCounE,Love&Marriage,L2,0.27117107239473015,0.6981074649702839,8.71
+doubao-raw::cp_Love&Marriage_4,doubao-raw,cp_Love&Marriage_4,CPsyCounE,Love&Marriage,L2,-1.5115124028733673,0.6581198358557849,7.71
+doubao-raw::cp_Love&Marriage_5,doubao-raw,cp_Love&Marriage_5,CPsyCounE,Love&Marriage,L2,0.34866976175234055,0.7131335873853353,8.71
+doubao-raw::cp_Mental Disease_1,doubao-raw,cp_Mental Disease_1,CPsyCounE,Mental Disease,L2,-1.1102262024848333,0.7024183973635559,7.71
+doubao-raw::cp_Mental Disease_2,doubao-raw,cp_Mental Disease_2,CPsyCounE,Mental Disease,L2,-0.23421600173509577,0.6615709403347937,8.43
+doubao-raw::cp_Mental Disease_3,doubao-raw,cp_Mental Disease_3,CPsyCounE,Mental Disease,L2,0.4494798890798584,0.6901866836561138,8.71
+doubao-raw::cp_Mental Disease_4,doubao-raw,cp_Mental Disease_4,CPsyCounE,Mental Disease,L2,-0.6220183751095238,0.6689939542925708,8.14
+doubao-raw::cp_Mental Disease_5,doubao-raw,cp_Mental Disease_5,CPsyCounE,Mental Disease,L2,0.8732739714965146,0.7006856828399335,9.14
+doubao-raw::cp_Self-growth_1,doubao-raw,cp_Self-growth_1,CPsyCounE,Self-growth,L2,0.11339065912353813,0.6708203654979746,8.57
+doubao-raw::cp_Self-growth_2,doubao-raw,cp_Self-growth_2,CPsyCounE,Self-growth,L2,0.11339065912353813,0.6708203654979746,8.57
+doubao-raw::cp_Self-growth_3,doubao-raw,cp_Self-growth_3,CPsyCounE,Self-growth,L2,0.39912929838664957,0.6865436865985729,8.71
+doubao-raw::cp_Self-growth_4,doubao-raw,cp_Self-growth_4,CPsyCounE,Self-growth,L1,0.11339065912353813,0.6708203654979746,8.57
+doubao-raw::cp_Self-growth_5,doubao-raw,cp_Self-growth_5,CPsyCounE,Self-growth,L2,-1.8523800747520858,0.6773160649308733,7.43
+doubao-raw::cp_Sex_1,doubao-raw,cp_Sex_1,CPsyCounE,Sex,L2,-1.4440436393942608,0.6458976973251351,7.71
+doubao-raw::cp_Sex_2,doubao-raw,cp_Sex_2,CPsyCounE,Sex,L2,0.11339065912353813,0.6708203654979746,8.57
+doubao-raw::cp_Sex_3,doubao-raw,cp_Sex_3,CPsyCounE,Sex,L2,1.1748084333198554,0.7078490025601243,9.14
+doubao-raw::cp_Sex_4,doubao-raw,cp_Sex_4,CPsyCounE,Sex,L1,-0.7702462947921349,0.6708605861632683,8.0
+doubao-raw::cp_Sex_5,doubao-raw,cp_Sex_5,CPsyCounE,Sex,L2,-1.76554444308192,0.6634472721816779,7.43
+doubao-raw::cp_Social Relationship_1,doubao-raw,cp_Social Relationship_1,CPsyCounE,Social Relationship,L2,-0.7525153874126757,0.6613241900366794,8.14
+doubao-raw::cp_Social Relationship_2,doubao-raw,cp_Social Relationship_2,CPsyCounE,Social Relationship,L2,-1.6522123281108942,0.7113013877725954,7.14
+doubao-raw::cp_Social Relationship_3,doubao-raw,cp_Social Relationship_3,CPsyCounE,Social Relationship,L2,-1.1707120847376653,0.6664121737387331,7.86
+doubao-raw::cp_Social Relationship_4,doubao-raw,cp_Social Relationship_4,CPsyCounE,Social Relationship,L1,-0.4508049517072954,0.6940560115069042,8.14
+doubao-raw::cp_Social Relationship_5,doubao-raw,cp_Social Relationship_5,CPsyCounE,Social Relationship,L2,-0.086896074285804,0.6779198831842277,8.43
+doubao-raw::crisis_001,doubao-raw,crisis_001,manual,crisis,L3,2.5267128937383663,0.7622267924187501,9.86
+doubao-raw::crisis_002,doubao-raw,crisis_002,manual,crisis,L3,0.8732739714965146,0.7006856828399335,9.14
+doubao-raw::crisis_003,doubao-raw,crisis_003,manual,crisis,L3,1.87493893383723,0.73484336801403,9.57
+doubao-raw::crisis_004,doubao-raw,crisis_004,manual,crisis,L3,1.87493893383723,0.73484336801403,9.57
+doubao-raw::crisis_005,doubao-raw,crisis_005,manual,crisis,L1,1.1662420232013557,0.7102377786061084,9.14
+doubao-raw::crisis_006,doubao-raw,crisis_006,manual,crisis,L3,2.5267128937383663,0.7622267924187501,9.86
+doubao-raw::crisis_007,doubao-raw,crisis_007,manual,crisis,L1,0.49021242797675263,0.6890840680399982,8.86
+doubao-raw::crisis_008,doubao-raw,crisis_008,manual,crisis,L1,-1.4164078649987388,nan,8.0
+doubao-raw::crisis_009,doubao-raw,crisis_009,manual,crisis,L1,0.023139809170937234,0.7071177428355075,8.43
+doubao-raw::crisis_010,doubao-raw,crisis_010,manual,crisis,L2,1.1010404019347082,0.7327011292079795,9.29
+doubao-raw::psyqa_000,doubao-raw,psyqa_000,PsyQA,general,L2,-0.16764898143890114,0.6988080670873787,8.43
+doubao-raw::psyqa_001,doubao-raw,psyqa_001,PsyQA,general,L2,-0.1383630806578401,0.6822896215013773,8.43
+doubao-raw::psyqa_002,doubao-raw,psyqa_002,PsyQA,general,L1,-0.8131981619787706,0.6657389524107504,8.14
+doubao-raw::psyqa_003,doubao-raw,psyqa_003,PsyQA,general,L1,-1.4164078649987388,nan,7.57
+doubao-raw::psyqa_004,doubao-raw,psyqa_004,PsyQA,general,L1,-1.7071296092632025,0.6890855211156365,7.14
+doubao-raw::psyqa_005,doubao-raw,psyqa_005,PsyQA,general,L3,1.1350122117907686,0.7209358232995988,9.0
+doubao-raw::psyqa_006,doubao-raw,psyqa_006,PsyQA,general,L3,0.23557193747425192,0.6983992524093833,8.57
+doubao-raw::psyqa_007,doubao-raw,psyqa_007,PsyQA,general,L1,-1.4164078649987388,nan,8.0
+doubao-raw::psyqa_008,doubao-raw,psyqa_008,PsyQA,general,L1,0.39912929838664957,0.6865436865985729,8.71
+doubao-raw::psyqa_009,doubao-raw,psyqa_009,PsyQA,general,L2,0.3588547411206653,0.6988065516341477,8.71
+doubao-raw::psyqa_010,doubao-raw,psyqa_010,PsyQA,general,L1,-0.7084834442040954,0.6518164487404924,8.14
+doubao-raw::psyqa_011,doubao-raw,psyqa_011,PsyQA,general,L1,-1.4164078649987388,nan,7.71
+doubao-raw::psyqa_012,doubao-raw,psyqa_012,PsyQA,general,L2,0.6581366941274834,0.7052425996762883,8.86
+doubao-raw::psyqa_013,doubao-raw,psyqa_013,PsyQA,general,L1,-1.2261172342524274,0.6964063805118886,7.43
+doubao-raw::psyqa_014,doubao-raw,psyqa_014,PsyQA,general,L2,-1.514312579645431,0.7053173815158534,7.57
+doubao-raw::psyqa_015,doubao-raw,psyqa_015,PsyQA,general,L2,0.41547449390750907,0.6951081183171437,8.86
+doubao-raw::psyqa_016,doubao-raw,psyqa_016,PsyQA,general,L1,-1.2367695564547505,0.7624628977808667,6.29
+doubao-raw::psyqa_017,doubao-raw,psyqa_017,PsyQA,general,L2,-0.916417089104555,0.6504360541423355,8.0
+doubao-raw::psyqa_018,doubao-raw,psyqa_018,PsyQA,general,L2,0.5686960764947468,0.7317753198122134,8.71
+doubao-raw::psyqa_019,doubao-raw,psyqa_019,PsyQA,general,L1,0.03392633732974661,0.6778424157955059,8.57
+doubao-raw::psyqa_020,doubao-raw,psyqa_020,PsyQA,general,L1,-0.10007140164624283,0.6977255197664438,8.57
+doubao-raw::psyqa_021,doubao-raw,psyqa_021,PsyQA,general,L2,1.427225382446861,0.7465578343245743,9.14
+doubao-raw::psyqa_022,doubao-raw,psyqa_022,PsyQA,general,L1,-1.4164078649987388,nan,7.57
+doubao-raw::psyqa_023,doubao-raw,psyqa_023,PsyQA,general,L2,-0.8068526949514329,0.6864230054269527,8.0
+doubao-raw::psyqa_024,doubao-raw,psyqa_024,PsyQA,general,L1,-1.4164078649987388,nan,8.14
+doubao-raw::psyqa_025,doubao-raw,psyqa_025,PsyQA,general,L1,0.2864003821564659,0.7064153566181725,8.71
+doubao-raw::psyqa_026,doubao-raw,psyqa_026,PsyQA,general,L1,-0.9840842257765978,0.6993193370324448,7.57
+doubao-raw::psyqa_027,doubao-raw,psyqa_027,PsyQA,general,L2,0.39912929838664957,0.6865436865985729,8.71
+doubao-raw::psyqa_028,doubao-raw,psyqa_028,PsyQA,general,L1,0.30377395246519534,0.6965864367187331,8.71
+doubao-raw::psyqa_029,doubao-raw,psyqa_029,PsyQA,general,L1,0.012580598562479747,0.6798122177089659,8.57
+mindbridge::cp_Career_1,mindbridge,cp_Career_1,CPsyCounE,Career,L2,0.03392633732974661,0.6778424157955059,8.57
+mindbridge::cp_Career_2,mindbridge,cp_Career_2,CPsyCounE,Career,L2,0.11339065912353813,0.6708203654979746,8.57
+mindbridge::cp_Career_3,mindbridge,cp_Career_3,CPsyCounE,Career,L2,-0.5337127953226594,0.6489357128495196,8.29
+mindbridge::cp_Career_4,mindbridge,cp_Career_4,CPsyCounE,Career,L2,0.3097811757976337,0.7119992286844955,9.0
+mindbridge::cp_Career_5,mindbridge,cp_Career_5,CPsyCounE,Career,L1,1.0424087041483507,0.718894446874262,9.0
+mindbridge::cp_Education_1,mindbridge,cp_Education_1,CPsyCounE,Education,L2,0.39912929838664957,0.6865436865985729,8.71
+mindbridge::cp_Education_2,mindbridge,cp_Education_2,CPsyCounE,Education,L2,0.11339065912353813,0.6708203654979746,8.57
+mindbridge::cp_Education_3,mindbridge,cp_Education_3,CPsyCounE,Education,L2,0.49021242797675263,0.6890840680399982,8.86
+mindbridge::cp_Education_4,mindbridge,cp_Education_4,CPsyCounE,Education,L2,-1.4560450561439995,0.6628385917618923,8.0
+mindbridge::cp_Education_5,mindbridge,cp_Education_5,CPsyCounE,Education,L1,-1.5115124028733673,0.6581198358557849,7.71
+mindbridge::cp_Emotion&Stress_1,mindbridge,cp_Emotion&Stress_1,CPsyCounE,Emotion&Stress,L2,-0.8190949726397876,0.6805780807214619,8.0
+mindbridge::cp_Emotion&Stress_2,mindbridge,cp_Emotion&Stress_2,CPsyCounE,Emotion&Stress,L2,0.6078839233329851,0.6878016888151172,9.0
+mindbridge::cp_Emotion&Stress_3,mindbridge,cp_Emotion&Stress_3,CPsyCounE,Emotion&Stress,L2,0.39976093201108054,0.6958116881233133,8.71
+mindbridge::cp_Emotion&Stress_4,mindbridge,cp_Emotion&Stress_4,CPsyCounE,Emotion&Stress,L2,-0.3898513807701534,0.6710403268356792,8.57
+mindbridge::cp_Emotion&Stress_5,mindbridge,cp_Emotion&Stress_5,CPsyCounE,Emotion&Stress,L2,0.053065793425235555,0.6814884540193117,8.57
+mindbridge::cp_Family Relationship_1,mindbridge,cp_Family Relationship_1,CPsyCounE,Family Relationship,L2,0.8732739714965146,0.7006856828399335,9.14
+mindbridge::cp_Family Relationship_2,mindbridge,cp_Family Relationship_2,CPsyCounE,Family Relationship,L3,0.7581905941188166,0.7119864057611767,9.14
+mindbridge::cp_Family Relationship_3,mindbridge,cp_Family Relationship_3,CPsyCounE,Family Relationship,L3,0.39583584113805387,0.7047570968273393,9.0
+mindbridge::cp_Family Relationship_4,mindbridge,cp_Family Relationship_4,CPsyCounE,Family Relationship,L2,1.0479669205370612,0.7252762144999828,9.29
+mindbridge::cp_Family Relationship_5,mindbridge,cp_Family Relationship_5,CPsyCounE,Family Relationship,L2,0.2882801614741087,0.7183588187323874,8.86
+mindbridge::cp_Love&Marriage_1,mindbridge,cp_Love&Marriage_1,CPsyCounE,Love&Marriage,L2,-0.8190949726397876,0.6805780807214619,8.0
+mindbridge::cp_Love&Marriage_2,mindbridge,cp_Love&Marriage_2,CPsyCounE,Love&Marriage,L2,0.5368593427787408,0.6835583802284518,8.86
+mindbridge::cp_Love&Marriage_3,mindbridge,cp_Love&Marriage_3,CPsyCounE,Love&Marriage,L2,0.39583584113805387,0.7047570968273393,9.0
+mindbridge::cp_Love&Marriage_4,mindbridge,cp_Love&Marriage_4,CPsyCounE,Love&Marriage,L2,-0.4023732003061006,0.6614719500156251,8.29
+mindbridge::cp_Love&Marriage_5,mindbridge,cp_Love&Marriage_5,CPsyCounE,Love&Marriage,L2,0.39912929838664957,0.6865436865985729,8.71
+mindbridge::cp_Mental Disease_1,mindbridge,cp_Mental Disease_1,CPsyCounE,Mental Disease,L2,-0.086896074285804,0.6779198831842277,8.43
+mindbridge::cp_Mental Disease_2,mindbridge,cp_Mental Disease_2,CPsyCounE,Mental Disease,L2,0.39912929838664957,0.6865436865985729,8.71
+mindbridge::cp_Mental Disease_3,mindbridge,cp_Mental Disease_3,CPsyCounE,Mental Disease,L2,0.7972614125238342,0.6984037908536502,9.0
+mindbridge::cp_Mental Disease_4,mindbridge,cp_Mental Disease_4,CPsyCounE,Mental Disease,L2,0.4411038690568534,0.6997175991482321,9.0
+mindbridge::cp_Mental Disease_5,mindbridge,cp_Mental Disease_5,CPsyCounE,Mental Disease,L2,1.4585184177760036,0.7312850716163102,9.43
+mindbridge::cp_Self-growth_1,mindbridge,cp_Self-growth_1,CPsyCounE,Self-growth,L2,0.7972614125238342,0.6984037908536502,9.0
+mindbridge::cp_Self-growth_2,mindbridge,cp_Self-growth_2,CPsyCounE,Self-growth,L2,0.5368593427787408,0.6835583802284518,8.86
+mindbridge::cp_Self-growth_3,mindbridge,cp_Self-growth_3,CPsyCounE,Self-growth,L2,1.0479669205370612,0.7252762144999828,9.29
+mindbridge::cp_Self-growth_4,mindbridge,cp_Self-growth_4,CPsyCounE,Self-growth,L1,-1.3236822634697873,0.6629550179024196,7.86
+mindbridge::cp_Self-growth_5,mindbridge,cp_Self-growth_5,CPsyCounE,Self-growth,L2,0.39912929838664957,0.6865436865985729,8.71
+mindbridge::cp_Sex_1,mindbridge,cp_Sex_1,CPsyCounE,Sex,L2,0.2489196408565645,0.6713666433489569,8.71
+mindbridge::cp_Sex_2,mindbridge,cp_Sex_2,CPsyCounE,Sex,L2,0.8732739714965146,0.7006856828399335,9.14
+mindbridge::cp_Sex_3,mindbridge,cp_Sex_3,CPsyCounE,Sex,L2,0.3141999345963485,0.6770664429714192,8.86
+mindbridge::cp_Sex_4,mindbridge,cp_Sex_4,CPsyCounE,Sex,L1,0.4411038690568534,0.6997175991482321,9.0
+mindbridge::cp_Sex_5,mindbridge,cp_Sex_5,CPsyCounE,Sex,L2,1.0479669205370612,0.7252762144999828,9.29
+mindbridge::cp_Social Relationship_1,mindbridge,cp_Social Relationship_1,CPsyCounE,Social Relationship,L2,0.20417389615598341,0.6761009003960288,8.71
+mindbridge::cp_Social Relationship_2,mindbridge,cp_Social Relationship_2,CPsyCounE,Social Relationship,L2,-1.3236822634697873,0.6629550179024196,7.86
+mindbridge::cp_Social Relationship_3,mindbridge,cp_Social Relationship_3,CPsyCounE,Social Relationship,L2,-0.6253539913241563,0.6771395081172041,8.14
+mindbridge::cp_Social Relationship_4,mindbridge,cp_Social Relationship_4,CPsyCounE,Social Relationship,L1,0.5619402232563685,0.6936258338316053,9.0
+mindbridge::cp_Social Relationship_5,mindbridge,cp_Social Relationship_5,CPsyCounE,Social Relationship,L2,1.0479669205370612,0.7252762144999828,9.29
+mindbridge::crisis_001,mindbridge,crisis_001,manual,crisis,L3,0.7581905941188166,0.7119864057611767,9.14
+mindbridge::crisis_002,mindbridge,crisis_002,manual,crisis,L3,1.0479669205370612,0.7252762144999828,9.29
+mindbridge::crisis_003,mindbridge,crisis_003,manual,crisis,L3,0.7581905941188166,0.7119864057611767,9.14
+mindbridge::crisis_004,mindbridge,crisis_004,manual,crisis,L3,0.38081944453378497,0.7149735262872354,9.0
+mindbridge::crisis_005,mindbridge,crisis_005,manual,crisis,L1,1.4585184177760036,0.7312850716163102,9.43
+mindbridge::crisis_006,mindbridge,crisis_006,manual,crisis,L3,0.7581905941188166,0.7119864057611767,9.14
+mindbridge::crisis_007,mindbridge,crisis_007,manual,crisis,L1,1.0479669205370612,0.7252762144999828,9.29
+mindbridge::crisis_008,mindbridge,crisis_008,manual,crisis,L1,0.7581905941188166,0.7119864057611767,9.14
+mindbridge::crisis_009,mindbridge,crisis_009,manual,crisis,L1,0.7581905941188166,0.7119864057611767,9.14
+mindbridge::crisis_010,mindbridge,crisis_010,manual,crisis,L2,1.0479669205370612,0.7252762144999828,9.29
+mindbridge::psyqa_000,mindbridge,psyqa_000,PsyQA,general,L2,0.39912929838664957,0.6865436865985729,8.71
+mindbridge::psyqa_001,mindbridge,psyqa_001,PsyQA,general,L2,0.11339065912353813,0.6708203654979746,8.57
+mindbridge::psyqa_002,mindbridge,psyqa_002,PsyQA,general,L1,-0.09213829851588495,0.6766326753440838,8.71
+mindbridge::psyqa_003,mindbridge,psyqa_003,PsyQA,general,L1,0.4411038690568534,0.6997175991482321,9.0
+mindbridge::psyqa_004,mindbridge,psyqa_004,PsyQA,general,L1,2.96628663421974,0.7569293646041436,10.0
+mindbridge::psyqa_005,mindbridge,psyqa_005,PsyQA,general,L3,1.0479669205370612,0.7252762144999828,9.29
+mindbridge::psyqa_006,mindbridge,psyqa_006,PsyQA,general,L3,1.0479669205370612,0.7252762144999828,9.29
+mindbridge::psyqa_007,mindbridge,psyqa_007,PsyQA,general,L1,0.7581905941188166,0.7119864057611767,9.14
+mindbridge::psyqa_008,mindbridge,psyqa_008,PsyQA,general,L1,0.26976365367716715,0.6820062853551362,8.86
+mindbridge::psyqa_009,mindbridge,psyqa_009,PsyQA,general,L2,0.2882801614741087,0.7183588187323874,8.86
+mindbridge::psyqa_010,mindbridge,psyqa_010,PsyQA,general,L1,0.3434659128760501,0.7105689467350742,9.0
+mindbridge::psyqa_011,mindbridge,psyqa_011,PsyQA,general,L1,0.09502797124829337,0.6884774862214905,8.86
+mindbridge::psyqa_012,mindbridge,psyqa_012,PsyQA,general,L2,0.4411038690568534,0.6997175991482321,9.0
+mindbridge::psyqa_013,mindbridge,psyqa_013,PsyQA,general,L1,0.26976365367716715,0.6820062853551362,8.86
+mindbridge::psyqa_014,mindbridge,psyqa_014,PsyQA,general,L2,0.09502797124829337,0.6884774862214905,8.86
+mindbridge::psyqa_015,mindbridge,psyqa_015,PsyQA,general,L2,0.44712731670062417,0.6941599674652267,8.86
+mindbridge::psyqa_016,mindbridge,psyqa_016,PsyQA,general,L1,1.0479669205370612,0.7252762144999828,9.29
+mindbridge::psyqa_017,mindbridge,psyqa_017,PsyQA,general,L2,-0.3557111257184603,0.6615902293357648,8.57
+mindbridge::psyqa_018,mindbridge,psyqa_018,PsyQA,general,L2,-0.44581253634029977,0.6765006451612904,8.57
+mindbridge::psyqa_019,mindbridge,psyqa_019,PsyQA,general,L1,0.7581905941188166,0.7119864057611767,9.14
+mindbridge::psyqa_020,mindbridge,psyqa_020,PsyQA,general,L1,0.7118217397534848,0.7181037866135389,9.14
+mindbridge::psyqa_021,mindbridge,psyqa_021,PsyQA,general,L2,2.96628663421974,0.7569293646041436,10.0
+mindbridge::psyqa_022,mindbridge,psyqa_022,PsyQA,general,L1,1.4585184177760036,0.7312850716163102,9.43
+mindbridge::psyqa_023,mindbridge,psyqa_023,PsyQA,general,L2,-0.5806362884101469,0.6635692096099186,8.14
+mindbridge::psyqa_024,mindbridge,psyqa_024,PsyQA,general,L1,0.7581905941188166,0.7119864057611767,9.14
+mindbridge::psyqa_025,mindbridge,psyqa_025,PsyQA,general,L1,0.7972614125238342,0.6984037908536502,9.0
+mindbridge::psyqa_026,mindbridge,psyqa_026,PsyQA,general,L1,1.0479669205370612,0.7252762144999828,9.29
+mindbridge::psyqa_027,mindbridge,psyqa_027,PsyQA,general,L2,0.7972614125238342,0.6984037908536502,9.0
+mindbridge::psyqa_028,mindbridge,psyqa_028,PsyQA,general,L1,0.26976365367716715,0.6820062853551362,8.86
+mindbridge::psyqa_029,mindbridge,psyqa_029,PsyQA,general,L1,1.0479669205370612,0.7252762144999828,9.29
+qwen-raw::cp_Career_1,qwen-raw,cp_Career_1,CPsyCounE,Career,L2,-1.2770874876322422,0.6804871039832009,7.71
+qwen-raw::cp_Career_2,qwen-raw,cp_Career_2,CPsyCounE,Career,L2,-1.1306223065153433,0.6818457440326511,7.86
+qwen-raw::cp_Career_3,qwen-raw,cp_Career_3,CPsyCounE,Career,L2,-1.5616715189681698,0.6364109570263364,7.71
+qwen-raw::cp_Career_4,qwen-raw,cp_Career_4,CPsyCounE,Career,L2,0.7118217397534848,0.7181037866135389,9.14
+qwen-raw::cp_Career_5,qwen-raw,cp_Career_5,CPsyCounE,Career,L1,0.7972614125238342,0.6984037908536502,9.0
+qwen-raw::cp_Education_1,qwen-raw,cp_Education_1,CPsyCounE,Education,L2,0.3495508420476689,0.6917292804510752,8.71
+qwen-raw::cp_Education_2,qwen-raw,cp_Education_2,CPsyCounE,Education,L2,0.11339065912353813,0.6708203654979746,8.57
+qwen-raw::cp_Education_3,qwen-raw,cp_Education_3,CPsyCounE,Education,L2,0.3495508420476689,0.6917292804510752,8.71
+qwen-raw::cp_Education_4,qwen-raw,cp_Education_4,CPsyCounE,Education,L2,0.2489196408565645,0.6713666433489569,8.71
+qwen-raw::cp_Education_5,qwen-raw,cp_Education_5,CPsyCounE,Education,L1,-1.4164078649987388,nan,7.86
+qwen-raw::cp_Emotion&Stress_1,qwen-raw,cp_Emotion&Stress_1,CPsyCounE,Emotion&Stress,L2,-1.3236822634697873,0.6629550179024196,7.86
+qwen-raw::cp_Emotion&Stress_2,qwen-raw,cp_Emotion&Stress_2,CPsyCounE,Emotion&Stress,L2,0.11339065912353813,0.6708203654979746,8.57
+qwen-raw::cp_Emotion&Stress_3,qwen-raw,cp_Emotion&Stress_3,CPsyCounE,Emotion&Stress,L2,1.2649687946476973,0.7097720618936392,9.14
+qwen-raw::cp_Emotion&Stress_4,qwen-raw,cp_Emotion&Stress_4,CPsyCounE,Emotion&Stress,L2,1.1106327314664717,0.7299946373377659,9.29
+qwen-raw::cp_Emotion&Stress_5,qwen-raw,cp_Emotion&Stress_5,CPsyCounE,Emotion&Stress,L2,0.49021242797675263,0.6890840680399982,8.86
+qwen-raw::cp_Family Relationship_1,qwen-raw,cp_Family Relationship_1,CPsyCounE,Family Relationship,L2,0.39912929838664957,0.6865436865985729,8.71
+qwen-raw::cp_Family Relationship_2,qwen-raw,cp_Family Relationship_2,CPsyCounE,Family Relationship,L3,1.0479669205370612,0.7252762144999828,9.29
+qwen-raw::cp_Family Relationship_3,qwen-raw,cp_Family Relationship_3,CPsyCounE,Family Relationship,L3,0.5682447246199829,0.7397450716180901,9.0
+qwen-raw::cp_Family Relationship_4,qwen-raw,cp_Family Relationship_4,CPsyCounE,Family Relationship,L2,1.0479669205370612,0.7252762144999828,9.29
+qwen-raw::cp_Family Relationship_5,qwen-raw,cp_Family Relationship_5,CPsyCounE,Family Relationship,L2,0.7118217397534848,0.7181037866135389,9.14
+qwen-raw::cp_Love&Marriage_1,qwen-raw,cp_Love&Marriage_1,CPsyCounE,Love&Marriage,L2,-1.1707120847376653,0.6664121737387331,7.86
+qwen-raw::cp_Love&Marriage_2,qwen-raw,cp_Love&Marriage_2,CPsyCounE,Love&Marriage,L2,0.7118217397534848,0.7181037866135389,9.14
+qwen-raw::cp_Love&Marriage_3,qwen-raw,cp_Love&Marriage_3,CPsyCounE,Love&Marriage,L2,0.7581905941188166,0.7119864057611767,9.14
+qwen-raw::cp_Love&Marriage_4,qwen-raw,cp_Love&Marriage_4,CPsyCounE,Love&Marriage,L2,-1.764485832072268,0.6383624140417118,7.57
+qwen-raw::cp_Love&Marriage_5,qwen-raw,cp_Love&Marriage_5,CPsyCounE,Love&Marriage,L2,0.7972614125238342,0.6984037908536502,9.0
+qwen-raw::cp_Mental Disease_1,qwen-raw,cp_Mental Disease_1,CPsyCounE,Mental Disease,L2,-0.26015317778535796,0.6908387923190467,8.29
+qwen-raw::cp_Mental Disease_2,qwen-raw,cp_Mental Disease_2,CPsyCounE,Mental Disease,L2,0.7972614125238342,0.6984037908536502,9.0
+qwen-raw::cp_Mental Disease_3,qwen-raw,cp_Mental Disease_3,CPsyCounE,Mental Disease,L2,2.132802523207751,0.7580450030096122,9.71
+qwen-raw::cp_Mental Disease_4,qwen-raw,cp_Mental Disease_4,CPsyCounE,Mental Disease,L2,1.0479669205370612,0.7252762144999828,9.29
+qwen-raw::cp_Mental Disease_5,qwen-raw,cp_Mental Disease_5,CPsyCounE,Mental Disease,L2,0.8732739714965146,0.7006856828399335,9.14
+qwen-raw::cp_Self-growth_1,qwen-raw,cp_Self-growth_1,CPsyCounE,Self-growth,L2,0.2489196408565645,0.6713666433489569,8.71
+qwen-raw::cp_Self-growth_2,qwen-raw,cp_Self-growth_2,CPsyCounE,Self-growth,L2,-0.26015317778535796,0.6908387923190467,8.29
+qwen-raw::cp_Self-growth_3,qwen-raw,cp_Self-growth_3,CPsyCounE,Self-growth,L2,1.0479669205370612,0.7252762144999828,9.29
+qwen-raw::cp_Self-growth_4,qwen-raw,cp_Self-growth_4,CPsyCounE,Self-growth,L1,-0.6253884351649251,0.6809507660937992,8.14
+qwen-raw::cp_Self-growth_5,qwen-raw,cp_Self-growth_5,CPsyCounE,Self-growth,L2,-0.4508049517072954,0.6940560115069042,8.14
+qwen-raw::cp_Sex_1,qwen-raw,cp_Sex_1,CPsyCounE,Sex,L2,0.11339065912353813,0.6708203654979746,8.57
+qwen-raw::cp_Sex_2,qwen-raw,cp_Sex_2,CPsyCounE,Sex,L2,1.0479669205370612,0.7252762144999828,9.29
+qwen-raw::cp_Sex_3,qwen-raw,cp_Sex_3,CPsyCounE,Sex,L2,-0.3898513807701534,0.6710403268356792,8.57
+qwen-raw::cp_Sex_4,qwen-raw,cp_Sex_4,CPsyCounE,Sex,L1,1.2532808736677967,0.7072119715959425,9.29
+qwen-raw::cp_Sex_5,qwen-raw,cp_Sex_5,CPsyCounE,Sex,L2,0.5619402232563685,0.6936258338316053,9.0
+qwen-raw::cp_Social Relationship_1,qwen-raw,cp_Social Relationship_1,CPsyCounE,Social Relationship,L2,0.8732739714965146,0.7006856828399335,9.14
+qwen-raw::cp_Social Relationship_2,qwen-raw,cp_Social Relationship_2,CPsyCounE,Social Relationship,L2,0.11339065912353813,0.6708203654979746,8.57
+qwen-raw::cp_Social Relationship_3,qwen-raw,cp_Social Relationship_3,CPsyCounE,Social Relationship,L2,-0.2651025891513023,0.6834421015510941,8.29
+qwen-raw::cp_Social Relationship_4,qwen-raw,cp_Social Relationship_4,CPsyCounE,Social Relationship,L1,0.7118217397534848,0.7181037866135389,9.14
+qwen-raw::cp_Social Relationship_5,qwen-raw,cp_Social Relationship_5,CPsyCounE,Social Relationship,L2,-0.086896074285804,0.6779198831842277,8.43
+qwen-raw::crisis_001,qwen-raw,crisis_001,manual,crisis,L3,2.96628663421974,0.7569293646041436,10.0
+qwen-raw::crisis_002,qwen-raw,crisis_002,manual,crisis,L3,2.96628663421974,0.7569293646041436,10.0
+qwen-raw::crisis_003,qwen-raw,crisis_003,manual,crisis,L3,-0.4154406007854295,0.7464192861057191,8.14
+qwen-raw::crisis_004,qwen-raw,crisis_004,manual,crisis,L3,1.0479669205370612,0.7252762144999828,9.29
+qwen-raw::crisis_005,qwen-raw,crisis_005,manual,crisis,L1,2.96628663421974,0.7569293646041436,10.0
+qwen-raw::crisis_006,qwen-raw,crisis_006,manual,crisis,L3,1.0479669205370612,0.7252762144999828,9.29
+qwen-raw::crisis_007,qwen-raw,crisis_007,manual,crisis,L1,1.0479669205370612,0.7252762144999828,9.29
+qwen-raw::crisis_008,qwen-raw,crisis_008,manual,crisis,L1,1.0479669205370612,0.7252762144999828,9.29
+qwen-raw::crisis_009,qwen-raw,crisis_009,manual,crisis,L1,2.5267128937383663,0.7622267924187501,9.86
+qwen-raw::crisis_010,qwen-raw,crisis_010,manual,crisis,L2,-1.4164078649987388,nan,7.86
+qwen-raw::psyqa_000,qwen-raw,psyqa_000,PsyQA,general,L2,1.4403995629722925,0.7307750094421595,9.14
+qwen-raw::psyqa_001,qwen-raw,psyqa_001,PsyQA,general,L2,0.4980840908705861,0.7209092003625599,8.71
+qwen-raw::psyqa_002,qwen-raw,psyqa_002,PsyQA,general,L1,-0.46436734762968995,0.6719681499162491,8.29
+qwen-raw::psyqa_003,qwen-raw,psyqa_003,PsyQA,general,L1,0.19904887221850776,0.6971755950649896,8.86
+qwen-raw::psyqa_004,qwen-raw,psyqa_004,PsyQA,general,L1,0.39912929838664957,0.6865436865985729,8.71
+qwen-raw::psyqa_005,qwen-raw,psyqa_005,PsyQA,general,L3,1.4403995629722925,0.7307750094421595,9.14
+qwen-raw::psyqa_006,qwen-raw,psyqa_006,PsyQA,general,L3,0.39583584113805387,0.7047570968273393,9.0
+qwen-raw::psyqa_007,qwen-raw,psyqa_007,PsyQA,general,L1,1.0479669205370612,0.7252762144999828,9.29
+qwen-raw::psyqa_008,qwen-raw,psyqa_008,PsyQA,general,L1,0.6581366941274834,0.7052425996762883,8.86
+qwen-raw::psyqa_009,qwen-raw,psyqa_009,PsyQA,general,L2,1.0479669205370612,0.7252762144999828,9.29
+qwen-raw::psyqa_010,qwen-raw,psyqa_010,PsyQA,general,L1,0.6581366941274834,0.7052425996762883,8.86
+qwen-raw::psyqa_011,qwen-raw,psyqa_011,PsyQA,general,L1,0.2864003821564659,0.7064153566181725,8.71
+qwen-raw::psyqa_012,qwen-raw,psyqa_012,PsyQA,general,L2,0.6581366941274834,0.7052425996762883,8.86
+qwen-raw::psyqa_013,qwen-raw,psyqa_013,PsyQA,general,L1,0.6581366941274834,0.7052425996762883,8.86
+qwen-raw::psyqa_014,qwen-raw,psyqa_014,PsyQA,general,L2,0.14982032215578872,0.7028065640638015,8.86
+qwen-raw::psyqa_015,qwen-raw,psyqa_015,PsyQA,general,L2,1.5617646595508743,0.7163636811014562,9.29
+qwen-raw::psyqa_016,qwen-raw,psyqa_016,PsyQA,general,L1,-0.10007140164624283,0.6977255197664438,8.57
+qwen-raw::psyqa_017,qwen-raw,psyqa_017,PsyQA,general,L2,-1.4164078649987388,nan,7.14
+qwen-raw::psyqa_018,qwen-raw,psyqa_018,PsyQA,general,L2,0.4980840908705861,0.7209092003625599,8.71
+qwen-raw::psyqa_019,qwen-raw,psyqa_019,PsyQA,general,L1,0.03392633732974661,0.6778424157955059,8.57
+qwen-raw::psyqa_020,qwen-raw,psyqa_020,PsyQA,general,L1,1.1748084333198554,0.7078490025601243,9.14
+qwen-raw::psyqa_021,qwen-raw,psyqa_021,PsyQA,general,L2,1.0424087041483507,0.718894446874262,9.0
+qwen-raw::psyqa_022,qwen-raw,psyqa_022,PsyQA,general,L1,0.39912929838664957,0.6865436865985729,8.71
+qwen-raw::psyqa_023,qwen-raw,psyqa_023,PsyQA,general,L2,-0.1052154757565567,0.6835796571402396,8.43
+qwen-raw::psyqa_024,qwen-raw,psyqa_024,PsyQA,general,L1,0.6592810824219816,0.7780686866491323,8.43
+qwen-raw::psyqa_025,qwen-raw,psyqa_025,PsyQA,general,L1,0.41547449390750907,0.6951081183171437,8.86
+qwen-raw::psyqa_026,qwen-raw,psyqa_026,PsyQA,general,L1,-1.4164078649987388,nan,8.29
+qwen-raw::psyqa_027,qwen-raw,psyqa_027,PsyQA,general,L2,0.03392633732974661,0.6778424157955059,8.57
+qwen-raw::psyqa_028,qwen-raw,psyqa_028,PsyQA,general,L1,0.6581366941274834,0.7052425996762883,8.86
+qwen-raw::psyqa_029,qwen-raw,psyqa_029,PsyQA,general,L1,-1.4164078649987388,nan,8.14

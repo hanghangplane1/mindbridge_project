@@ -1,0 +1,11 @@
+{
+  "gateway_url": "http://127.0.0.1:8090",
+  "websocket_url": "ws://127.0.0.1:8090/api/demo/ws",
+  "client_count": 2,
+  "request_frequency_ms": 1000,
+  "duration_sec": 10,
+  "enable_http": true,
+  "enable_sse": false,
+  "enable_websocket": true,
+  "enable_subscribe": true
+}

@@ -1,0 +1,21 @@
+{
+  "name": "mindbridge_project",
+  "version": "1.0.0",
+  "description": "本目录聚合 A2A 大仓库里 **MindBridge 工业级 C++ 运行时** 及其构建所需子树，便于与 `OpenHarness/`、`pico-hardness/` 等参考项目区分开。",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/test": "^1.60.0"
+  }
+}

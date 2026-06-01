@@ -1,0 +1,48 @@
+# PsychoBench 配置
+# API 密钥从环境变量读取，不要硬编码
+
+agents:
+  deepseek-raw:
+    base_url: "https://api.deepseek.com/v1"
+    env_key: "DEEPSEEK_API_KEY"
+    model: "deepseek-v4-flash"
+
+  qwen-raw:
+    base_url: "https://dashscope.aliyuncs.com/compatible-mode/v1"
+    env_key: "QWEN_API_KEY"
+    model: "qwen3.6-flash"
+
+  doubao-raw:
+    base_url: "https://ark.cn-beijing.volces.com/api/v3"
+    env_key: "DOUBAO_API_KEY"
+    model: "doubao-seed-2-0-lite-260428"
+
+  mindbridge:
+    base_url: "http://localhost:8090"
+    env_key: ""
+    model: "mindbridge"
+    type: "jsonrpc"  # MindBridge 使用 JSON-RPC 格式
+
+  # mindbridge 需要 Gateway 运行，暂时禁用
+  # mindbridge:
+  #   base_url: "http://localhost:8090/v1"
+  #   env_key: "MINDBRIDGE_API_KEY"
+  #   model: "mindbridge"
+
+judge:
+  base_url: "https://token-plan-cn.xiaomimimo.com/v1"
+  env_key: "MIMO_API_KEY"
+  model: "mimo-v2.5-pro"
+
+# 数据源路径
+data:
+  cpsycoune_dir: "/home/hang/work/a2a/psycho_benchmark/datasets/CPsyCounE"
+  psyqa_file: "/home/hang/work/a2a/psycho_benchmark/datasets/PsyQA_example.json"
+  output_dir: "data"
+
+# IRT 配置
+irt:
+  train_script: "/home/hang/work/a2a/agent-psychometrics/swebench_irt/train.py"
+  model: "1pl"
+  epochs: 2000
+  seed: 42

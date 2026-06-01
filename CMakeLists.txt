@@ -1,0 +1,70 @@
+cmake_minimum_required(VERSION 3.15)
+project(MindBridgeProject VERSION 1.0.0 LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+option(BUILD_TESTING "Build tests" OFF)
+option(MINDBRIDGE_BUILD_LEGACY_RPC_FRAMEWORK "Build legacy root src/ agent_rpc_framework" OFF)
+
+# Prefer the project-local gRPC/protobuf installation when present.
+set(LOCAL_GRPC_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/.deps/grpc")
+if(EXISTS "${LOCAL_GRPC_PREFIX}/lib/pkgconfig/grpc++.pc")
+    set(ENV{PKG_CONFIG_PATH}
+        "${LOCAL_GRPC_PREFIX}/lib/pkgconfig:${LOCAL_GRPC_PREFIX}/share/pkgconfig:$ENV{PKG_CONFIG_PATH}")
+    set(ENV{PATH} "${LOCAL_GRPC_PREFIX}/bin:$ENV{PATH}")
+    list(PREPEND CMAKE_PREFIX_PATH "${LOCAL_GRPC_PREFIX}")
+endif()
+
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(GRPC REQUIRED grpc++)
+pkg_check_modules(PROTOBUF REQUIRED protobuf)
+find_package(CURL REQUIRED)
+find_package(Threads REQUIRED)
+find_package(OpenSSL REQUIRED)
+find_package(Boost REQUIRED COMPONENTS system)
+find_package(SQLite3 REQUIRED)
+
+link_directories(${GRPC_LIBRARY_DIRS} ${PROTOBUF_LIBRARY_DIRS})
+
+include_directories(${GRPC_INCLUDE_DIRS})
+include_directories(${PROTOBUF_INCLUDE_DIRS})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/proto/generated)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/common/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/server/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/client/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/a2a/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/a2a_adapter/include)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/orchestrator/include)
+
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -O2")
+if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -DDEBUG")
+endif()
+
+add_subdirectory(proto)
+if(MINDBRIDGE_BUILD_LEGACY_RPC_FRAMEWORK)
+    add_subdirectory(src)
+endif()
+add_subdirectory(common)
+add_subdirectory(a2a)
+add_subdirectory(a2a_adapter)
+add_subdirectory(orchestrator)
+add_subdirectory(mindbridge_harness)
+add_subdirectory(mcp)
+add_subdirectory(server)
+add_subdirectory(client)
+add_subdirectory(examples/mindcare)
+
+# Knowledge ingest CLI tool
+add_executable(knowledge_ingest mindbridge_harness/tools/knowledge_ingest/main.cpp)
+target_link_libraries(knowledge_ingest PRIVATE CURL::libcurl OpenSSL::SSL OpenSSL::Crypto)
+target_include_directories(knowledge_ingest PRIVATE ${CMAKE_SOURCE_DIR}/a2a/third_party)
+if(NOT MSVC)
+    target_compile_options(knowledge_ingest PRIVATE -Wall -Wextra)
+endif()
+
+if(BUILD_TESTING)
+    enable_testing()
+    add_subdirectory(tests)
+endif()

@@ -1,0 +1,220 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gateway
+  namespace: mindbridge
+  labels:
+    app: gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gateway
+  template:
+    metadata:
+      labels:
+        app: gateway
+    spec:
+      containers:
+      - name: gateway
+        image: mindbridge:platform-dev
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8090
+          name: http
+        envFrom:
+        - configMapRef:
+            name: mindbridge-config
+        - secretRef:
+            name: mindbridge-secrets
+            optional: true
+        env:
+        - name: SERVICE_NAME
+          value: gateway
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 8090
+        volumeMounts:
+        - name: run-artifacts
+          mountPath: /app/.mindbridge/runs
+      volumes:
+      - name: run-artifacts
+        persistentVolumeClaim:
+          claimName: run-artifacts
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orchestrator
+  namespace: mindbridge
+  labels:
+    app: orchestrator
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: orchestrator
+  template:
+    metadata:
+      labels:
+        app: orchestrator
+    spec:
+      containers:
+      - name: orchestrator
+        image: mindbridge:platform-dev
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5009
+          name: http
+        envFrom:
+        - configMapRef:
+            name: mindbridge-config
+        - secretRef:
+            name: mindbridge-secrets
+            optional: true
+        env:
+        - name: SERVICE_NAME
+          value: orchestrator
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 5009
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: counselor
+  namespace: mindbridge
+  labels:
+    app: counselor
+spec:
+  serviceName: counselor-svc
+  replicas: 2
+  selector:
+    matchLabels:
+      app: counselor
+  template:
+    metadata:
+      labels:
+        app: counselor
+    spec:
+      containers:
+      - name: counselor
+        image: mindbridge:platform-dev
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5010
+          name: http
+        envFrom:
+        - configMapRef:
+            name: mindbridge-config
+        - secretRef:
+            name: mindbridge-secrets
+            optional: true
+        env:
+        - name: SERVICE_NAME
+          value: counselor
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 5010
+        volumeMounts:
+        - name: counselor-data
+          mountPath: /app/.mindbridge
+        - name: run-artifacts
+          mountPath: /app/.mindbridge/runs
+      volumes:
+      - name: run-artifacts
+        persistentVolumeClaim:
+          claimName: run-artifacts
+  volumeClaimTemplates:
+  - metadata:
+      name: counselor-data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      resources:
+        requests:
+          storage: 1Gi
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: evaluator
+  namespace: mindbridge
+  labels:
+    app: evaluator
+spec:
+  serviceName: evaluator-svc
+  replicas: 2
+  selector:
+    matchLabels:
+      app: evaluator
+  template:
+    metadata:
+      labels:
+        app: evaluator
+    spec:
+      containers:
+      - name: evaluator
+        image: mindbridge:platform-dev
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5011
+          name: http
+        envFrom:
+        - configMapRef:
+            name: mindbridge-config
+        - secretRef:
+            name: mindbridge-secrets
+            optional: true
+        env:
+        - name: SERVICE_NAME
+          value: evaluator
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 5011
+        volumeMounts:
+        - name: run-artifacts
+          mountPath: /app/.mindbridge/runs
+      volumes:
+      - name: run-artifacts
+        persistentVolumeClaim:
+          claimName: run-artifacts
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend
+  namespace: mindbridge
+  labels:
+    app: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: mindbridge:platform-dev
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5173
+          name: http
+        env:
+        - name: SERVICE_NAME
+          value: frontend
+        - name: MINDBRIDGE_FRONTEND_GATEWAY_URL
+          value: http://gateway-svc:8090
+        - name: MINDBRIDGE_FRONTEND_ORCHESTRATOR_URL
+          value: http://orchestrator-svc:5009
+        - name: MINDBRIDGE_FRONTEND_COUNSELOR_URL
+          value: http://counselor-0.counselor-svc:5010
+        - name: MINDBRIDGE_FRONTEND_EVALUATOR_URL
+          value: http://evaluator-0.evaluator-svc:5011

@@ -1,0 +1,79 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: platform-svc
+  namespace: mindbridge
+spec:
+  selector:
+    app: platform
+  ports:
+  - name: http
+    port: 8077
+    targetPort: 8077
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gateway-svc
+  namespace: mindbridge
+spec:
+  selector:
+    app: gateway
+  ports:
+  - name: http
+    port: 8090
+    targetPort: 8090
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: orchestrator-svc
+  namespace: mindbridge
+spec:
+  selector:
+    app: orchestrator
+  ports:
+  - name: http
+    port: 5009
+    targetPort: 5009
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: counselor-svc
+  namespace: mindbridge
+spec:
+  clusterIP: None
+  selector:
+    app: counselor
+  ports:
+  - name: http
+    port: 5010
+    targetPort: 5010
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: evaluator-svc
+  namespace: mindbridge
+spec:
+  clusterIP: None
+  selector:
+    app: evaluator
+  ports:
+  - name: http
+    port: 5011
+    targetPort: 5011
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-svc
+  namespace: mindbridge
+spec:
+  selector:
+    app: frontend
+  ports:
+  - name: http
+    port: 5173
+    targetPort: 5173
