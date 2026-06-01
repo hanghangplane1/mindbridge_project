@@ -1,4 +1,8 @@
+<a id="english"></a>
+
 # MindBridge
+
+[English](#english) | [中文版](#chinese)
 
 **MindBridge is an industrial C++ multi-agent runtime for governed mental-health agents.**
 
@@ -224,6 +228,219 @@ What remains future work:
 - deeper automated browser screenshot regression for observability dashboards
 
 ## Documentation
+
+- [Architecture](docs/architecture.md)
+- [Harness Engineering](docs/harness_engineering.md)
+- [Model Strategy](docs/model_strategy.md)
+- [Deployment](docs/deployment.md)
+- [Repository Map](REPO_MAP.md)
+- [MindBridge Harness README](mindbridge_harness/README.md)
+
+---
+
+<a id="chinese"></a>
+
+# MindBridge 中文版
+
+[English](#english) | [中文版](#chinese)
+
+**MindBridge 是一个面向心理健康智能体的工业级 C++ 多智能体运行时。**
+
+它不只是一个聊天 Demo。这个项目的重点是把 LLM 包进一套可路由、可审计、可评测、可持久化、可观测的工程运行时里，包括服务编排、工具治理、风险评估、状态存储、运行产物、浏览器可见 QA，以及可选的 eBPF 边界观测。
+
+## 这个项目的价值
+
+MindBridge 想解决的核心问题是：
+
+> 怎样把一个基于大模型的心理健康助手，做成一个可以解释、验证、追踪和演示的工程化 Agent Runtime？
+
+这个仓库最有技术含量的部分包括：
+
+- **C++ 多智能体运行时**：包含 Gateway、Orchestrator、Counselor、Evaluator、Benchmark、Platform 和前端 Demo。
+- **受治理的工具调用链**：工具执行统一经过 `ToolRegistry -> PermissionChecker -> HookExecutor -> TraceRecorder`，不是随意外调。
+- **心理健康安全闭环**：包含风险路由、Evaluator 兜底、会话结束评估，以及 MCP 风格的 Excel / Email 工具链路。
+- **分层持久化设计**：会话状态采用 `user_id + conversation_id + namespace_name + state_key` 隔离，附件存储走 MySQL、Redis、FastDFS 风格链路。
+- **运行产物可追踪**：每次 run 都要求落盘 `.mindbridge/runs/<run_id>/task_state.json`、`trace.jsonl`、`report.json`。
+- **eBPF 边界观测**：可选接入 AgentSight 风格的进程、stdio、文件/网络/资源、TLS 明文观测，并和运行 trace 关联。
+- **验证优先的工程方式**：项目内置 benchmark、browser QA、platform smoke test 和统一 verify 脚本，避免只剩展示层。
+
+## 架构概览
+
+![MindBridge system architecture](docs/diagrams/01_system_architecture.png)
+
+主链路可以概括为：
+
+```text
+Frontend / Client
+    -> mindbridge_gateway
+    -> mindbridge_orchestrator
+    -> mindbridge_counselor
+    -> high-risk / session-end 时进入 mindbridge_evaluator
+    -> ToolRegistry / PermissionChecker / HookExecutor / TraceRecorder
+    -> run artifacts / state store / cloud storage / benchmark
+```
+
+各层职责：
+
+- `mindbridge_gateway`：HTTP 入口、鉴权/会话边界、前端代理、存储 API。
+- `mindbridge_orchestrator`：意图/风险轻路由，决定何时进入 evaluator。
+- `mindbridge_counselor`：咨询主链路，负责 prompt、memory、RAG、tools、trace。
+- `mindbridge_evaluator`：高风险评估、会话结束评估、兜底决策。
+- `mindbridge_harness`：承载模型抽象、工具治理、状态、存储、benchmark、observability、网络层等通用运行时能力。
+
+## 特色能力
+
+| 模块 | 说明 | 证据 |
+|------|------|------|
+| 工业级入口服务 | 独立的 gateway / orchestrator / counselor / evaluator / platform / benchmark | `mindbridge_harness/apps/*.cpp` |
+| Runtime 治理 | 工具注册、权限控制、hook、trace 审计链 | `mindbridge_harness/include/mindbridge/harness/`, `mindbridge_harness/src/harness/` |
+| 心理健康安全闭环 | Counselor + Evaluator 风险链路、session-end 评估、MCP 告警/报表 | `mindbridge_harness/apps/orchestrator_main.cpp`, `mindbridge_harness/apps/evaluator_main.cpp` |
+| 模型抽象层 | `ModelClient` 屏蔽 Ollama、OpenAI-compatible、DashScope native 差异 | `mindbridge_harness/include/mindbridge/model/`, `docs/model_strategy.md` |
+| 多模态能力 | 情绪分析、ASR、TTS、前端多媒体交互 | `mindbridge_harness/src/multimodal/`, `mindbridge_harness/src/speech/`, `frontend/demo/app.js` |
+| 分布式状态 | master/follower replay，用户/会话/namespace/state_key 隔离 | `mindbridge_harness/src/state/distributed_state_store.cpp` |
+| 云存储链路 | Gateway 存储接口 + MySQL / Redis / FastDFS 风格后端 | `mindbridge_harness/src/storage/cloud_storage.cpp`, `infra/cloud_storage/` |
+| Run 产物 | 可复盘的 task state、trace、report | `mindbridge_harness/src/runtime/run_store.cpp` |
+| eBPF 观测 | AgentSight 风格的运行时边界观测和前端视图 | `mindbridge_harness/ebpf/agentsight_process/`, `mindbridge_harness/src/observability/` |
+| 评测与 QA | Harness benchmark、PsychoBench、browser smoke、sandbox QA | `mindbridge_harness/benchmarks/mindbridge_tasks.json`, `benchmarks/psycho_bench/`, `sandbox/browser_qa/` |
+| 平台化 MVP | Workspace / AgentSession / UniversalEvent / K8s 部署骨架 | `mindbridge_harness/src/platform/`, `k8s/`, `scripts/k8s-platform-deploy.sh` |
+
+## 工具治理
+
+MindBridge 的重点不是“直接调用模型”，而是把模型放在一个受治理的 runtime 内部。
+
+工具执行边界如下：
+
+```text
+ToolRegistry
+    -> schema + validation
+    -> PermissionChecker
+    -> HookExecutor
+    -> TraceRecorder
+    -> structured ToolResult
+```
+
+这对心理健康场景很关键，因为告警、报表、检索、语音、存储这类外部动作都应该可审计。MCP 在这里被视为工具协议层，而不是独立的 `ToolAgent`。
+
+## 状态、存储与运行产物
+
+项目里有三层持久化职责：
+
+| 层级 | 作用 |
+|------|------|
+| `ConversationMemory` / context manager | 短期上下文和结构化对话记忆 |
+| `DistributedStateStore` | 可持久化、可复制的运行时状态 |
+| Cloud storage | 附件对象、分片上传状态、对象元数据 |
+
+Run 产物目录约定：
+
+```text
+.mindbridge/runs/<run_id>/
+    task_state.json
+    trace.jsonl
+    report.json
+    ebpf_events.jsonl
+    boundary_trace.jsonl
+    observability_report.json
+```
+
+这部分是面试里很能体现深度的地方，因为它说明系统不是只返回一段文本，而是能追踪整个 runtime 行为。
+
+## eBPF 边界观测
+
+MindBridge 支持可选的 AgentSight 风格运行时观测，核心能力包括：
+
+- `process_new` 进程生命周期观测
+- 文件 / 网络 / 资源扩展探针
+- `stdiocap` 标准输入输出捕获
+- `sslsniff` TLS 明文捕获
+- `boundary_trace.jsonl` 与 `observability_report.json` 关联分析
+- 前端 Observability 视图
+
+这条链路默认关闭，不影响正常咨询流程。它是 runtime observability 组件，不是新的 agent。
+
+## 快速开始
+
+统一验证入口：
+
+```bash
+bash scripts/verify_mindbridge.sh
+```
+
+手动构建：
+
+```bash
+cmake -S . -B build -DBUILD_TESTING=OFF
+cmake --build build --target mindbridge_harness mindbridge_gateway mindbridge_orchestrator mindbridge_counselor mindbridge_evaluator mindbridge_benchmark ai_counselor_agent ai_evaluator_agent -j2
+./build/mindbridge_harness/mindbridge_benchmark
+```
+
+远程 OpenAI-compatible 启动：
+
+```bash
+bash scripts/start_demo_openai.sh
+```
+
+DashScope native 启动：
+
+```bash
+bash scripts/start_demo_dashscope.sh
+```
+
+这两个远程启动脚本都会设置 `MINDBRIDGE_REQUIRE_REMOTE_MODEL=1`，避免悄悄回退到本地 Ollama。
+
+## 验证矩阵
+
+| 命令 | 作用 |
+|------|------|
+| `bash scripts/verify_mindbridge.sh` | 主验证入口，覆盖构建和核心回归 |
+| `./build/mindbridge_harness/mindbridge_benchmark` | Harness contract / hardness benchmark |
+| `bash scripts/verify_cloud_storage_smoke.sh` | 本地 fake storage 冒烟 |
+| `MINDBRIDGE_STORAGE_BACKEND=cloud bash scripts/verify_cloud_storage_live.sh` | MySQL / Redis / FastDFS live 验证 |
+| `bash scripts/verify_state_mysql_live.sh` | MySQL-backed state store 验证 |
+| `bash scripts/verify_platform_browser_smoke.sh` | 浏览器可见 platform smoke test |
+| `bash scripts/verify_sandbox_browser_qa.sh` | sandbox browser QA |
+| `bash scripts/verify_ebpf_live.sh` | Linux 主机上的 live eBPF 验证 |
+
+## 仓库结构
+
+| 路径 | 角色 |
+|------|------|
+| `mindbridge_harness/` | 核心 C++ agent runtime |
+| `frontend/demo/` | 浏览器 demo、storage dashboard、observability / platform 视图 |
+| `examples/mindcare/` | 必须保持可运行的回归 demo |
+| `docs/` | 架构、工程、模型策略、部署、benchmark 文档 |
+| `scripts/` | 启停、QA、storage、platform、eBPF、验证脚本 |
+| `infra/cloud_storage/` | 项目内云存储编排 |
+| `k8s/` | 平台化部署与 eBPF opt-in profile |
+| `sandbox/browser_qa/` | 浏览器 QA harness |
+| `benchmarks/psycho_bench/` | PsychoBench 评测脚本与数据 |
+| `integrations/mcp_server_integrated/` | MCP 服务端参考实现 |
+| `a2a/`, `a2a_adapter/`, `mcp/`, `orchestrator/`, `proto/`, `common/` | 本地 C++ 依赖子树 |
+| `include/`, `src/`, `server/`, `client/` | 旧版/通用 RPC framework 代码 |
+
+## 面试表述
+
+一句适合面试时直接说的话：
+
+> MindBridge 是一个面向心理健康智能体的工业级 C++ agent harness。我做的不只是 prompt 或聊天逻辑，而是围绕模型构建了多服务编排、风险评估、工具治理、状态持久化、云存储、benchmark、浏览器 QA 和可选 eBPF 可观测性，让它更像一个可验证、可解释、可调试的 Agent Runtime。
+
+可以诚实宣称的内容：
+
+- 已实现 C++ runtime 入口服务和前端 demo
+- 已实现工具治理和 trace artifact 链路
+- 已实现风险评估与 evaluator 兜底
+- 已实现状态隔离和云存储集成
+- 已实现 benchmark、browser QA、platform MVP
+- 已实现可选 eBPF 观测链路
+
+仍属于下一步工作的内容：
+
+- 更完整的生产级 auth / RBAC / rate limit
+- 更强的 live provider CI 覆盖
+- 更完整的 K8s live 验证
+- 更深入的 observability 前端回归测试
+
+## 相关文档
 
 - [Architecture](docs/architecture.md)
 - [Harness Engineering](docs/harness_engineering.md)
