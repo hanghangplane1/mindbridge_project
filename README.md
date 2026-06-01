@@ -50,18 +50,21 @@ At a high level:
 - `mindbridge_evaluator` handles risk assessment, high-risk fallback, and session summary/report behavior.
 - `mindbridge_harness` contains the reusable runtime pieces: model clients, tool governance, state, storage, benchmark, observability, and network primitives.
 
-## What The Harness Means
+## What The Harness Adds
 
-In this repository, **harness** means the engineering layer that sits around the model and turns it into a controlled runtime, rather than a raw prompt-in / text-out wrapper.
+The **harness** is the control layer that makes the agent system engineerable. A raw LLM call can produce an answer, but it does not decide where the request should go, which tools are allowed, how state is isolated, what evidence is written, or how regressions are measured. The harness owns those responsibilities.
 
-The harness is responsible for:
+In this project, the harness turns model calls into a governed runtime with five explicit boundaries:
 
-- routing requests across gateway, orchestrator, counselor, and evaluator services
-- enforcing tool boundaries through schema validation, permission checks, hooks, and trace recording
-- managing runtime state, persisted artifacts, and cloud storage integration
-- providing benchmark, browser QA, and observability hooks so behavior can be verified instead of guessed
+| Boundary | Harness responsibility | Main implementation |
+|----------|------------------------|---------------------|
+| Request boundary | Normalize requests, route by intent/risk, and keep Gateway / Orchestrator / Counselor / Evaluator roles separate | `mindbridge_gateway`, `mindbridge_orchestrator`, `mindbridge_counselor`, `mindbridge_evaluator` |
+| Model boundary | Keep Ollama, OpenAI-compatible APIs, and DashScope native APIs behind one `ModelClient` contract | `mindbridge_harness/include/mindbridge/model/` |
+| Tool boundary | Require schema validation, permission checks, hooks, structured results, and trace events before external actions happen | `ToolRegistry`, `PermissionChecker`, `HookExecutor`, `TraceRecorder` |
+| State boundary | Preserve user, conversation, namespace, and state-key isolation across memory, persisted state, and storage metadata | `ConversationMemory`, `DistributedStateStore`, `CloudStorage` |
+| Evidence boundary | Emit run artifacts, benchmark results, browser QA evidence, and optional eBPF observability reports | `RunStore`, `BenchmarkRunner`, `BoundaryObservability` |
 
-Concretely, the harness lives mainly under `mindbridge_harness/`, and its reusable core includes `AgentLoop`, `ToolRegistry`, `PermissionChecker`, `HookExecutor`, `TraceRecorder`, `RunStore`, `DistributedStateStore`, and the model / speech / multimodal / observability layers.
+This is the main engineering value of the repository: the model is not trusted to be the system. The harness constrains inputs, routes risky cases, mediates tools, records what happened, and gives the project repeatable verification points.
 
 ## Feature Highlights
 
@@ -327,18 +330,21 @@ Frontend / Client
 - `mindbridge_evaluator`：高风险评估、会话结束评估、兜底决策。
 - `mindbridge_harness`：承载模型抽象、工具治理、状态、存储、benchmark、observability、网络层等通用运行时能力。
 
-## Harness 是什么
+## Harness 提供了什么
 
-这里说的 **harness**，不是一个模糊的包装词，而是围绕模型建立起来的工程运行时层。它的作用是把“模型调用”变成“可路由、可治理、可观测、可验证”的系统。
+这里的 **harness** 是让 Agent 系统真正工程化的控制层。裸 LLM 调用只能生成一段回复，但它不会自动处理请求应该去哪、哪些工具允许执行、用户状态如何隔离、运行证据怎么落盘、回归效果如何评测。Harness 负责这些系统边界。
 
-在这个项目里，harness 主要负责：
+在这个项目里，harness 把模型调用变成了有治理能力的 runtime，核心是五类边界：
 
-- 把请求编排到 gateway、orchestrator、counselor、evaluator 这些服务
-- 把工具调用收敛到 schema 校验、权限控制、hook 和 trace 审计链里
-- 管理运行时状态、run artifacts、云存储链路
-- 给 benchmark、browser QA、observability 提供统一的验证和复盘入口
+| 边界 | Harness 负责什么 | 主要实现 |
+|------|------------------|----------|
+| 请求边界 | 规范请求格式，按意图/风险路由，并保持 Gateway / Orchestrator / Counselor / Evaluator 分工 | `mindbridge_gateway`, `mindbridge_orchestrator`, `mindbridge_counselor`, `mindbridge_evaluator` |
+| 模型边界 | 把 Ollama、OpenAI-compatible、DashScope native 都收敛到统一 `ModelClient` 契约后面 | `mindbridge_harness/include/mindbridge/model/` |
+| 工具边界 | 外部动作必须先经过 schema 校验、权限检查、hook、结构化结果和 trace 记录 | `ToolRegistry`, `PermissionChecker`, `HookExecutor`, `TraceRecorder` |
+| 状态边界 | 用 user、conversation、namespace、state key 隔离记忆、持久状态和存储元数据 | `ConversationMemory`, `DistributedStateStore`, `CloudStorage` |
+| 证据边界 | 输出 run artifacts、benchmark 结果、browser QA 证据和可选 eBPF 观测报告 | `RunStore`, `BenchmarkRunner`, `BoundaryObservability` |
 
-对应实现主要在 `mindbridge_harness/` 下，核心组件包括 `AgentLoop`、`ToolRegistry`、`PermissionChecker`、`HookExecutor`、`TraceRecorder`、`RunStore`、`DistributedStateStore`，以及模型、语音、多模态、可观测性等运行时模块。
+这就是这个仓库最主要的工程价值：模型不是整个系统，harness 才是把模型约束成可路由、可审计、可复盘、可评测 Agent Runtime 的部分。
 
 ## 特色能力
 
