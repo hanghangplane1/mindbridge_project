@@ -163,6 +163,28 @@ Both remote startup scripts set `MINDBRIDGE_REQUIRE_REMOTE_MODEL=1` so the demo 
 | `bash scripts/verify_sandbox_browser_qa.sh` | Sandbox/browser QA dry-run and unit checks |
 | `bash scripts/verify_ebpf_live.sh` | Live kernel eBPF verification on supported Linux hosts |
 
+## Benchmark Results
+
+MindBridge includes a psychology-oriented benchmark path under `benchmarks/psycho_bench/`.
+
+The evaluation setup uses:
+
+- **85 scenarios** across counseling, education, family, social, career, crisis, and related mental-health topics
+- **7 judged dimensions**: Active Listening, Empathy, Safety, Open-mindedness, Clarity, Boundaries, Holistic Approach
+- **1-10 ordinal scores per dimension**
+- **GRM scoring** through `run_grm.py`, which fits a Graded Response Model instead of collapsing scores into pass/fail
+
+Current GRM summary from `benchmarks/psycho_bench/data/grm/agent_abilities.csv`:
+
+| Agent | Theta | Mean Judge Score | Responses |
+|------|------:|-----------------:|----------:|
+| `mindbridge` | `0.442` | `8.888` | `85` |
+| `qwen-raw` | `0.415` | `8.792` | `85` |
+| `doubao-raw` | `-0.216` | `8.343` | `85` |
+| `deepseek-raw` | `-0.451` | `8.215` | `85` |
+
+Under this benchmark configuration, MindBridge scores above the raw baseline models and clears the repository's `qwen-raw + 2%` GRM target (`theta_ratio_vs_best_raw = 1.064`, `meets_2pct_target = True`).
+
 ## Repository Map
 
 | Path | Role |
@@ -400,6 +422,28 @@ bash scripts/start_demo_dashscope.sh
 | `bash scripts/verify_platform_browser_smoke.sh` | 浏览器可见 platform smoke test |
 | `bash scripts/verify_sandbox_browser_qa.sh` | sandbox browser QA |
 | `bash scripts/verify_ebpf_live.sh` | Linux 主机上的 live eBPF 验证 |
+
+## Benchmark 效果
+
+MindBridge 在 `benchmarks/psycho_bench/` 下带了一套面向心理咨询场景的 benchmark。
+
+评测口径是：
+
+- **85 个场景**
+- **7 个打分维度**：Active Listening、Empathy、Safety、Open-mindedness、Clarity、Boundaries、Holistic Approach
+- **每个维度 1-10 分**
+- **使用 GRM 打分**：通过 `run_grm.py` 拟合 Graded Response Model，而不是简单做 pass/fail 二值化
+
+当前 `benchmarks/psycho_bench/data/grm/agent_abilities.csv` 的结果是：
+
+| Agent | Theta | 平均 Judge 分数 | 样本数 |
+|------|------:|----------------:|------:|
+| `mindbridge` | `0.442` | `8.888` | `85` |
+| `qwen-raw` | `0.415` | `8.792` | `85` |
+| `doubao-raw` | `-0.216` | `8.343` | `85` |
+| `deepseek-raw` | `-0.451` | `8.215` | `85` |
+
+在这套 benchmark 配置下，MindBridge 的结果高于几个基座模型，并且达到了仓库里定义的 `qwen-raw + 2%` GRM 目标：`theta_ratio_vs_best_raw = 1.064`，`meets_2pct_target = True`。
 
 ## 仓库结构
 
